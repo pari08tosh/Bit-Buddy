@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="setting-content">
+  <div class="swipe-div" margin-top text-center>
+    <h2>Weather Settings</h2>
+    <hr />
+    <div *ngIf="currentCity">
+      <div margin-top *ngIf="!gps">
+        <h5>Current Location</h5>
+        <h3>{{cityName}}</h3>
+      </div>
+      <ion-list *ngIf="gps">
+        <ion-item class="current-city">
+          <h1>Current Location</h1>
+          <br />
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <h3>Latitute: {{lat}}</h3>
+              </ion-col>
+              <ion-col>
+                <h3>Longitude: {{lon}}</h3>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </div>
+    <ion-searchbar [(ngModel)]="searchString" class="search-bar" (ionInput)="onInput()" placeholder="Change City"></ion-searchbar>
+    <ion-list *ngIf="showList" class="city-list">
+      <ion-item *ngFor="let city of searchList" (click)="selectCity(city)" class="searchList">
+        {{city.name}}, IN
+      </ion-item>
+    </ion-list>
+    <ion-list></ion-list>
+    <ion-list class="location-btn" *ngIf="currentCity">
+      <h6 class="current-city">OR</h6>
+      <button *ngIf="!gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Use Location</button>
+      <button *ngIf="gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Refresh Location</button>
+    </ion-list>
+  </div>
+  <hr />
+  <button class="logout-btn" (click)="logoutFunc()" ion-button color="light" icon-left full><ion-icon margin-right name="log-out"></ion-icon> Logout</button>
+</ion-content>

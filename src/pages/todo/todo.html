@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Todos</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf='!this.gotData' class='todo-loading-div'>
+    <h2>Loading</h2>
+  </div>
+  <div *ngIf = 'gotData && todos.length !== 0'>
+    <ion-card *ngFor = "let todo of todos" class="todo-cards animated fadeIn">
+      <ion-item style="text-align: center">
+        <h2>{{todo.heading}}</h2>
+      </ion-item>
+      <ion-card-content>
+        <p style="font-size: 105%;">{{todo.description}}</p>
+        <hr>
+        <p><i>Deadline:- {{todo.deadline | date:"dd MMM, hh:mm a"}}</i></p>
+      </ion-card-content>
+      <ion-row style="text-align: center">
+        <ion-col>
+          <button (click)="editTodo(todo)" ion-button icon-left clear small color="secondary">
+            <ion-icon name="create"></ion-icon>
+            <div>Edit</div>
+          </button>
+        </ion-col>
+        <ion-col>
+          <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="success">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <div>Done</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-card>
+  </div>
+  <div *ngIf = "gotData && todos.length === 0" class="no-todo-div">
+    <p>
+      You currently have no todos
+    </p>
+  </div>
+
+  <ion-fab bottom right>
+    <button (click)="writeTodo()" ion-fab><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

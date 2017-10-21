@@ -1,0 +1,44 @@
+page-weather {
+
+}
+
+.currentWeather {
+  min-height: 95%;
+  color: #34495e;
+  max-width: 1000px;
+  position: relative;
+  top:0;
+  left:0;
+  bottom: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.pin-icon {
+  font-size: 90%;
+}
+
+h6 {
+  margin: 0px;
+  position: relative;
+  top: -5px;
+}
+
+.forecast{
+  h4 {
+    margin: 0px;
+  }
+  h6 {
+    position: relative;
+    top: 7px;
+  }
+  p {
+    position: relative;
+    top: -3px;
+  }
+}
+
+.temp {
+  font-size: 40px;
+}

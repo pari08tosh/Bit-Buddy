@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Edit Todo</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Heading</ion-label>
+      <ion-input required min="2" type="text" [(ngModel)]="heading"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Description (Optional)</ion-label>
+      <ion-textarea type="text" [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Deadline Date</ion-label>
+      <ion-datetime displayFormat="DD MMM, h:mm A" min="2016" max="2020" [(ngModel)]="deadline"></ion-datetime>
+    </ion-item>
+  </ion-list>
+  <button (click)="editTodo()" ion-button color="secondary">Save</button>
+</ion-content>
