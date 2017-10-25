@@ -42,8 +42,8 @@
     <ion-list></ion-list>
     <ion-list class="location-btn" *ngIf="currentCity">
       <h6 class="current-city">OR</h6>
-      <button *ngIf="!gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Use Location</button>
-      <button *ngIf="gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Refresh Location</button>
+      <button *ngIf="!gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Use GPS</button>
+      <button *ngIf="gps"ion-button icon-start round (click)="getAndStoreLocation()"><ion-icon name="pin"></ion-icon> Refresh GPS Location</button>
     </ion-list>
   </div>
   <hr />

@@ -1,8 +1,50 @@
+@font-face{
+  font-family: Ubuntu;
+  src: url('../assets/fonts/ubuntu.woff2') format('woff2');
+}
+
+
 .nav-items:hover
 {
   background-color: color($colors, light);
 }
 
+ion-nav{
+  background-image: url("../assets/images/back.jpg");
+  display: flex;
+  justify-content: center;
+}
+
+.ion-page, ion-toast {
+  max-width: 400px;
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-shadow: 0px 0px 15px #a7a7a7;
+}
+
+.scroll-content::-webkit-scrollbar {
+    width: .5em;
+}
+
+.scroll-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.scroll-content::-webkit-scrollbar-thumb {
+  background-color: color($colors, dark);
+  outline: 1px solid slategrey;
+}
+
+.top-temp {
+  font-size: 170%;
+}
+
+.top-settings {
+  font-size: 120%;
+}
 
 ion-title {
   text-align: center;

@@ -14,7 +14,7 @@
   <div *ngIf = 'gotData && todos.length !== 0'>
     <ion-card *ngFor = "let todo of todos" class="todo-cards animated fadeIn">
       <ion-item style="text-align: center">
-        <h2>{{todo.heading}}</h2>
+        <h2 class="todo-heading">{{todo.heading}}</h2>
       </ion-item>
       <ion-card-content>
         <p style="font-size: 105%;">{{todo.description}}</p>
@@ -23,13 +23,13 @@
       </ion-card-content>
       <ion-row style="text-align: center">
         <ion-col>
-          <button (click)="editTodo(todo)" ion-button icon-left clear small color="secondary">
+          <button (click)="editTodo(todo)" ion-button icon-left clear small color="blue">
             <ion-icon name="create"></ion-icon>
             <div>Edit</div>
           </button>
         </ion-col>
         <ion-col>
-          <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="success">
+          <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="secondary">
             <ion-icon name="checkmark-circle-outline"></ion-icon>
             <div>Done</div>
           </button>

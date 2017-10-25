@@ -83,6 +83,7 @@
     <allow-navigation href="http://192.168.43.93:8100" />
     <allow-navigation href="http://192.168.117.42:8100" />
     <allow-navigation href="http://192.168.0.135:8100" />
+    <allow-navigation href="http://192.168.117.42:8101" />
     <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />

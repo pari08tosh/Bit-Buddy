@@ -2,11 +2,113 @@ page-home {
 
 }
 
-h2 {
-  text-align: center;
-  color: #3498db;
-}
 
 .scroll-content {
     overflow-y: auto;
+}
+
+
+.home-title {
+  text-align: left;
+  position: relative;
+  left: 0px;
+}
+
+
+
+.weather-btn {
+  font-size: 130%;
+}
+
+.intro-div, .todo-div {
+  background-color: #2980b9;
+  color: white !important;
+  background-attachment: fixed;
+}
+
+
+.avatar {
+    width:100px;
+    height:100px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 0px 10npx #606060;
+}
+
+
+
+
+.user-name {
+  position: relative;
+  top: -20px;
+}
+
+.user-row {
+  padding-top: 40px;
+}
+
+
+.quote-div {
+  height: 50vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.scroll-content {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+.weather-grid {
+  padding: 0px !important;
+}
+
+.weather-temp {
+  position: relative;
+  top: 5px;
+}
+
+.weather-div, .todo-div {
+  cursor: pointer;
+}
+
+
+
+.btn-group {
+  position: fixed;
+  border: 0px;
+}
+
+ion-footer {
+  ion-icon {
+    color: #e67e22 !important;
+  }
+}
+
+.nav-btn {
+  font-size: 140%;
+  box-shadow: 0px 0px 5px #717070;
+  button {
+    width: 100%;
+    font-size: 80%;
+  }
+  ion-col {
+    margin: 0px;
+    padding: 0px;
+  }
+  ion-grid {
+    margin: 0px;
+    padding: 0px;
+  }
+}
+
+
+.user-name {
+  margin-top: 50px;
 }

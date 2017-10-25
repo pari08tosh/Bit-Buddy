@@ -13,7 +13,8 @@ $colors: (
   light:      #ecf0f1,
   dark:       #34495e,
   success:    #27ae60,
-  blue:       #2980b9
+  blue:       #2980b9,
+  orange:     #d35400
 );
 // Overwriding statements
 
@@ -22,7 +23,7 @@ $text-color: color($colors, dark);
 $card-md-text-color: color($colors, dark);
 
 $toast-md-background: #f39c12;
-
+$toolbar-md-title-font-size: 2.5rem;
 $fab-md-background-color: #2ecc71;
 
 $font-family-base: 'Ubuntu';

@@ -94,7 +94,7 @@ export class WeatherPage {
       });
       alert.present();
     }
-  )
+  );
     });
   }
 }

@@ -217,4 +217,9 @@ export class WeatherProvider {
          .map(res => res.json());
     }
   }
+
+  getQuote() {
+    return this.http.get(`http://quotes.stormconsultancy.co.uk/random.json`)
+    .map(res => res.json());
+  }
 }

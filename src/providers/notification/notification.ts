@@ -24,6 +24,7 @@ export class NotificationProvider {
       return;
     }
     this.enabled = true;
+    this.backgroundMode.setDefaults({ silent: true })
     this.backgroundMode.enable();
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
@@ -54,7 +55,7 @@ export class NotificationProvider {
               });
             });
           }
-        }, 5000);
+        }, 3600000);
       } else {
         console.log(`Erorr generating notifications`)
       }

@@ -11,3 +11,10 @@ page-todo {
   text-align: center;
   padding: 30px;
 }
+
+
+.todo-heading {
+  padding-top: 5px;
+  color: color($colors, orange) !important;
+  font-size: 110% !important;
+}

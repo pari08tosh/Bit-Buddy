@@ -1,12 +1,87 @@
 <ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
+  <ion-toolbar>
+    <ion-title class="home-title">BIT BUDDY</ion-title>
+    <ion-buttons end>
+      <button *ngIf="!showWeather" (click)="weatherPage()" class="weather-btn" ion-button icon-only>
+        <ion-icon name="partly-sunny"></ion-icon>
+      </button>
+      <button *ngIf="showWeather" (click)="weatherPage()" class="weather-btn" ion-button>
+        {{currentWeather.main.temp}} &#8451;
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <button (click)="settingsPage()" class="settings-btn" ion-button icon-only>
+        <ion-icon name="settings"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content padding overflow-scroll="false">
-  <h2 margin-top class="animated fadeIn">{{ wish }} {{ userName }}</h2>
+
+<ion-content overflow-scroll="false" text-center>
+  <div class="whole-content" *ngIf="showContent" animated fadeInUp>
+    <div class="intro-div">
+      <ion-grid class="user-row">
+        <ion-row>
+          <ion-col col-4>
+            <ion-avatar>
+              <img class="avatar" src="{{photoURL}}" alt="">
+            </ion-avatar>
+          </ion-col>
+          <ion-col col-8>
+            <h2 class="user-name">{{wish}} {{userName}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="quote" margin-bottom>
+        <h4 text-left padding-horizontal >"{{quote}}"</h4>
+        <h6 text-right padding>- {{author}}</h6>
+      </div>
+    </div>
+
+    <div class="weather-div" (click)="weatherPage()" *ngIf="showWeather" padding-top animated fadeIn>
+      <h3>Weather</h3>
+      <ion-grid class="weather-grid">
+        <ion-row>
+          <ion-col col-6>
+            <img width="120" height="120" src="http://openweathermap.org/img/w/{{currentWeather.weather[0].icon }}.png">
+          </ion-col>
+          <ion-col col-6 class="weather-temp">
+            <h1 class="temp">{{currentWeather.main.temp}} &#8451;</h1>
+            <h6 text-uppercase>{{currentWeather.weather[0].description}}</h6>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="todo-div" *ngIf="gotTodoData" padding-top (click)="todoPage()" margin-bottom>
+      <h2>Todo Status</h2>
+      <ion-grid margin-vertical>
+        <ion-row>
+          <ion-col margin-bottom col-4 style="border-right: 1px solid white;" padding-right>
+            <h1 style="font-size: 300%; position: relative; top: -20px;">{{todoCount}}</h1>
+            <h6 style="position: relative; top: -20px;">Tasks Pending</h6>
+          </ion-col>
+          <ion-col>
+            <h4>Latest</h4>
+            <h5>{{firstTodo}}</h5>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </ion-content>
+
+<ion-footer>
+  <div class="nav-btn" text-center>
+    <ion-grid>
+      <ion-row>
+        <ion-col><button (click)="todoPage()" ion-button icon-only [clear]="true"><ion-icon name="list"></ion-icon></button></ion-col>
+        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="card"></ion-icon></button></ion-col>
+        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="checkbox-outline"></ion-icon></button></ion-col>
+        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="paper"></ion-icon></button></ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-footer>

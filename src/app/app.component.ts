@@ -3,7 +3,6 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import * as firebase from 'firebase/app';
-
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { TodoPage } from '../pages/todo/todo';
@@ -62,6 +61,7 @@ export class MyApp {
       { title: 'Settings', component: SettingsPage, icon: 'settings' }
     ];
   }
+
 
 
   initializeApp() {

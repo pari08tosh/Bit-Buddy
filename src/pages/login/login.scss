@@ -11,4 +11,12 @@ page-login {
 .login-content {
   text-align: center;
   margin-top: 40px;
+  p {
+    font-size: 110% !important;
+    margin: 15px 10px;
+  }
+}
+
+.inner-login-content {
+  margin: auto 5px;
 }
