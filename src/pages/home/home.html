@@ -19,7 +19,7 @@
 
 
 <ion-content overflow-scroll="false" text-center>
-  <div class="whole-content" *ngIf="showContent" animated fadeInUp>
+  <div class="whole-content" *ngIf="showContent; else loading" animated fadeInUp>
     <div class="intro-div">
       <ion-grid class="user-row">
         <ion-row>
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <div class="weather-div" (click)="weatherPage()" *ngIf="showWeather" padding-top animated fadeIn>
+    <div class="weather-div" (click)="weatherPage()" *ngIf="showWeather; else loading" padding-top animated fadeIn>
       <h3>Weather</h3>
       <ion-grid class="weather-grid">
         <ion-row>
@@ -55,7 +55,7 @@
       </ion-grid>
     </div>
 
-    <div class="todo-div" *ngIf="gotTodoData" padding-top (click)="todoPage()" margin-bottom>
+    <div class="todo-div" *ngIf="gotTodoData; else loading" padding-top (click)="todoPage()" margin-bottom>
       <h2>Todo Status</h2>
       <ion-grid margin-vertical>
         <ion-row>
@@ -71,6 +71,10 @@
       </ion-grid>
     </div>
   </div>
+
+  <ng-template #loading>
+    <ion-spinner name="crescent"></ion-spinner>
+  </ng-template>
 </ion-content>
 
 <ion-footer>

@@ -3,7 +3,6 @@
   src: url('../assets/fonts/ubuntu.woff2') format('woff2');
 }
 
-
 .nav-items:hover
 {
   background-color: color($colors, light);
@@ -69,4 +68,11 @@ ion-title {
 
 .toast-class {
   text-align: center;
+}
+
+ion-spinner * {
+  font-size: 200% !important;
+  width: 28px !important;
+  height: 28px !important;
+  stroke: color($colors, orange) !important;
 }

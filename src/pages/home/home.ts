@@ -75,11 +75,6 @@ export class HomePage {
     }
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        let loading = this.loadingCtrl.create({
-          content: 'Fetching your data'
-        });
-        loading.present();
-
         this.userName = user.displayName.split(' ')[0];
         this.photoURL = user.photoURL;
         this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
@@ -92,7 +87,6 @@ export class HomePage {
           if (!this.ref['destroyed']) {
             this.ref.detectChanges();
           }
-          loading.dismiss();
         });
       }
     });
