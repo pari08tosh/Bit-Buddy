@@ -1,7 +1,6 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { WeatherProvider } from '../../providers/weather/weather';
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-weather',
@@ -22,8 +21,6 @@ export class WeatherPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
-    public storage: Storage,
     public weatherProvider: WeatherProvider,
     public loadingCtrl: LoadingController,
     private alertCtrl: AlertController,
@@ -54,27 +51,30 @@ export class WeatherPage {
     content: 'Fetching data from satelite'
     });
     loading.present();
-    this.storage.get('location').then(city => {
-      if (city) {
-        this.currentCity = city;
-      } else
-      {
-        this.currentCity.name = "Ranchi";
-        this.currentCity.id = "1258526";
-        this.currentCity.gps = false;
-      }
-    this.weatherProvider.getCurrentWeather(this.currentCity).subscribe(
-      data => {
-        this.currentWeather = data;
-        this.weatherProvider.getDailyWeather(this.currentCity).subscribe(
+    this.weatherProvider.getLocation(city => {
+      this.currentCity = city;
+      this.weatherProvider.getCurrentWeather(this.currentCity).subscribe(
         data => {
-          this.dailyWeather = data;
-          this.showWeather = true;
-          if (!this.ref['destroyed']) {
-            this.ref.detectChanges();
-          }
+          this.currentWeather = data;
+          this.weatherProvider.getDailyWeather(this.currentCity).subscribe(
+          data => {
+            this.dailyWeather = data;
+            this.showWeather = true;
+            if (!this.ref['destroyed']) {
+              this.ref.detectChanges();
+            }
+            loading.dismiss();
+          },
+        err => {
           loading.dismiss();
-        },
+          let alert = this.alertCtrl.create({
+            title: 'Error Fetching Data',
+            subTitle: 'We could not get your data. Please try again',
+            buttons: ['Dismiss']
+          });
+          alert.present();
+        });
+      },
       err => {
         loading.dismiss();
         let alert = this.alertCtrl.create({
@@ -83,18 +83,8 @@ export class WeatherPage {
           buttons: ['Dismiss']
         });
         alert.present();
-      });
-    },
-    err => {
-      loading.dismiss();
-      let alert = this.alertCtrl.create({
-        title: 'Error Fetching Data',
-        subTitle: 'We could not get your data. Please try again',
-        buttons: ['Dismiss']
-      });
-      alert.present();
-    }
-  );
+      }
+    );
     });
   }
 }

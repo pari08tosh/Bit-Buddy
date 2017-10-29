@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
-import * as firebase from 'firebase/app';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+
 
 @Component({
   selector: 'page-edit-todo',
@@ -18,10 +19,8 @@ export class EditTodoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertProvider: AlertProvider,
+    public firebaseProvider: FirebaseProvider,
   ) {
-    firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
-    });
   }
 
   ionViewDidLoad() {
@@ -32,8 +31,7 @@ export class EditTodoPage {
   }
 
   editTodo() {
-    firebase.database().ref(`/todos/${ this.user.uid }/${ this.navParams.get('key') }`).set({
-      uid: this.user.uid,
+    this.firebaseProvider.editTodo(this.navParams.get('id'),{
       heading: this.heading,
       description: this.description,
       deadline: this.deadline.slice(0, -1),

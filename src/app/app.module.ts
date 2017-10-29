@@ -25,9 +25,12 @@ import { GooglePlus } from '@ionic-native/google-plus';
 
 import { firebaseConfig } from '../environment';
 import * as firebase from "firebase";
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { AlertProvider } from '../providers/alert/alert';
 import { NotificationProvider } from '../providers/notification/notification';
 import { WeatherProvider } from '../providers/weather/weather';
+import { FirebaseProvider } from '../providers/firebase/firebase';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -46,6 +49,8 @@ firebase.initializeApp(firebaseConfig);
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig, 'bitBuddy'),
+    AngularFirestoreModule,
     HttpModule,
     IonicStorageModule.forRoot()
   ],
@@ -73,6 +78,7 @@ firebase.initializeApp(firebaseConfig);
     NotificationProvider,
     WeatherProvider,
     Geolocation,
+    FirebaseProvider,
   ]
 })
 export class AppModule {}

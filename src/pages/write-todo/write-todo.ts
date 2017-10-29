@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import * as firebase from 'firebase/app';
+import { NavController } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+
 
 @Component({
   selector: 'page-write-todo',
@@ -18,12 +19,9 @@ export class WriteTodoPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public alertProvider: AlertProvider,
+    public firebaseProvider: FirebaseProvider
   ) {
-    firebase.auth().onAuthStateChanged(user => {
-      this.user = user;
-    });
   }
 
   ionViewDidLoad() {
@@ -33,8 +31,7 @@ export class WriteTodoPage {
 
   addTodo()
   {
-    firebase.database().ref(`/todos/${ this.user.uid }`).push({
-      uid: this.user.uid,
+    this.firebaseProvider.addTodo({
       heading: this.heading,
       description: this.description,
       deadline: this.deadline.slice(0, -1),

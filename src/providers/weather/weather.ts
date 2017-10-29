@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Storage } from '@ionic/storage';
+import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -187,7 +189,10 @@ export class WeatherProvider {
     }
   },
 ];
-  constructor(public http: Http) {
+  constructor(
+    public http: Http,
+    public storage: Storage,
+  ) {
   }
 
   searchCities(searchString) {
@@ -198,8 +203,23 @@ export class WeatherProvider {
     return filter;
   }
 
+  getLocation(callback) {
+    this.storage.get('location').then(city => {
+      if (city) {
+        callback(city);
+      } else
+      {
+        return callback({
+          name: "Ranchi",
+          id: "1258526",
+          gps: false
+        });
+      }
+    });
+  }
+
   getCurrentWeather(city) {
-    if (city.gps) {
+    if (city.gps)  {
       return this.http.get(`http://api.openweathermap.org/data/2.5/weather?lon=${city.coord.lon}&lat=${city.coord.lat}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
          .map(res => res.json());
     } else {

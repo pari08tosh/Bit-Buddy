@@ -1,44 +1,45 @@
-import { Component, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import * as firebase from 'firebase/app';
 import { LoginPage } from '../login/login';
 import { ListPage } from '../list/list';
 import { TodoPage } from '../todo/todo';
 import { SettingsPage } from '../settings/settings';
 import { WeatherPage } from '../weather/weather';
 import { WeatherProvider } from '../../providers/weather/weather';
-import { Storage } from '@ionic/storage';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+import * as firebase from 'firebase/app';
+
 
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html',
 })
-export class HomePage implements OnDestroy  {
+export class HomePage {
 
   user: any;
   wish: String;
   userName: String;
   photoURL: String;
-  backgroundURL: any;
   currentCity: any = [];
   currentWeather: any = [];
   showWeather: Boolean = false;
   quote: String = '';
   author: String = '';
   showContent: Boolean = false;
-  todosRef: any;
   todoCount: number;
   gotTodoData: Boolean;
-  firstTodo: any;
+  firstTodo: String;
+  todoObservable: any;
 
   constructor(
     public navCtrl: NavController,
     public ref: ChangeDetectorRef,
-    public storage: Storage,
     public weatherProvider: WeatherProvider,
     public loadingCtrl: LoadingController,
+    public firebaseProvider: FirebaseProvider,
   ) {
+    this.user = null;
   }
 
   ionViewCanEnter() {
@@ -51,6 +52,7 @@ export class HomePage implements OnDestroy  {
         return false;
       }
     });
+
   }
 
   ngOnDestroy() {
@@ -71,7 +73,6 @@ export class HomePage implements OnDestroy  {
         this.wish = `Good Evening`;
       }
     }
-
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         let loading = this.loadingCtrl.create({
@@ -81,19 +82,12 @@ export class HomePage implements OnDestroy  {
 
         this.userName = user.displayName.split(' ')[0];
         this.photoURL = user.photoURL;
-
-        this.todosRef = firebase.database().ref(`todos/${ user.uid }`);
-        this.todosRef.orderByChild('deadline').on('value', data => {
-          console.log(`got todo data in home page`);
-          this.todoCount = 0;
-          this.firstTodo = null;
-          this.gotTodoData = false;
-          data.forEach((todo) => {
-            ++this.todoCount;
-            if (!this.firstTodo) {
-              this.firstTodo = todo.val().heading;
-            }
-          });
+        this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
+          console.log(data);
+          this.todoCount = data.length;
+          if (data.length !== 0) {
+            this.firstTodo = data[0].heading;
+          }
           this.gotTodoData = true;
           if (!this.ref['destroyed']) {
             this.ref.detectChanges();
@@ -127,25 +121,17 @@ export class HomePage implements OnDestroy  {
   ionViewDidEnter() {
     this.showWeather = false;
     console.log("entered page");
-    this.storage.get('location').then(city => {
-      if (city) {
-        this.currentCity = city;
-      } else
-        {
-          console.log()
-          this.currentCity.name = "Ranchi";
-          this.currentCity.id = "1258526";
-          this.currentCity.gps = false;
+    this.weatherProvider.getLocation(city => {
+      this.currentCity = city;
+      this.weatherProvider.getCurrentWeather(this.currentCity).subscribe(
+        data => {
+          this.currentWeather = data;
+          this.showWeather = true;
+          if (!this.ref['destroyed']) {
+            this.ref.detectChanges();
+          }
         }
-    this.weatherProvider.getCurrentWeather(this.currentCity).subscribe(
-      data => {
-        console.log(`found weather`);
-        this.currentWeather = data;
-        this.showWeather = true;
-        if (!this.ref['destroyed']) {
-          this.ref.detectChanges();
-        }
-      });
+      );
     });
   }
 
@@ -167,13 +153,6 @@ export class HomePage implements OnDestroy  {
 
   weatherPage() {
     this.navCtrl.push(WeatherPage);
-  }
-
-  ionViewWillUnload() {
-    console.log(`exit from home page`);
-    if( this.todosRef ) {
-      this.todosRef.off();
-    }
   }
 
 }

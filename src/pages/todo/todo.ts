@@ -3,7 +3,11 @@ import { NavController, NavParams } from 'ionic-angular';
 import { WriteTodoPage } from '../write-todo/write-todo';
 import { EditTodoPage } from '../edit-todo/edit-todo';
 import { AlertProvider } from '../../providers/alert/alert';
-import * as firebase from 'firebase/app';
+import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { Todo } from '../../models/models';
+import { Observable } from 'rxjs/Observable';
+
+
 
 @Component({
   selector: 'page-todo',
@@ -11,68 +15,55 @@ import * as firebase from 'firebase/app';
 })
 export class TodoPage {
 
-  todosRef: any;
-  user: any;
-  todos: any = [];
   todoObj: any;
   gotData: Boolean = false;
   todoFirebaseCallback: any;
+  todoList: Todo[];
+  user: any;
+  todoObservable: any;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertProvider: AlertProvider,
     public ref: ChangeDetectorRef,
+    public firebaseProvider: FirebaseProvider,
   ) {
     this.gotData = false;
   }
 
   ionViewDidLoad() {
-    console.log(`entered page`);
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.user = user;
-        this.todosRef = firebase.database().ref(`todos/${ this.user.uid }`);
-        this.todoFirebaseCallback = this.todosRef.orderByChild('deadline').limitToFirst(20).on('value', data => {
-          console.log(data);
-          this.todos = [];
-          data.forEach((todo) => {
-            const todoObj = {
-              key: todo.key,
-              deadline: todo.val().deadline,
-              heading: todo.val().heading,
-              description: todo.val().description,
-            }
-            this.todos.push(todoObj);
-          });
-          this.gotData = true;
-          if (!this.ref['destroyed']) {
-            this.ref.detectChanges();
-          }
-        });
-      } else {
-        this.user = null;
-        this.todos = [];
-      }
-    });
+    console.log('in page');
+    this.user = this.firebaseProvider.loggedIn();
+    if (this.user) {
+      this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
+        this.todoList = data;
+        console.log(this.todoList);
+        this.gotData = true;
+        if (!this.ref['destroyed']) {
+          this.ref.detectChanges();
+        }
+      });
+    }
   }
 
-  deleteTodo(todo) {
-    this.todosRef.child(todo.key).remove();
-    this.alertProvider.alert('Good Job!', 1500);
+
+  writeTodo() {
+    this.navCtrl.push(WriteTodoPage);
   }
 
   editTodo(todo) {
     this.navCtrl.push(EditTodoPage, todo);
   }
 
-  writeTodo() {
-    this.navCtrl.push(WriteTodoPage);
-  }
+  deleteTodo(todo) {
+   this.firebaseProvider.deleteTodo(todo);
+   this.alertProvider.alert('Good Job!', 1500);
+ }
+
 
   ionViewWillUnload() {
-    console.log(`todo exit`);
-    this.todosRef.off('value', this.todoFirebaseCallback);
+    this.todoObservable.unsubscribe();
   }
 
 }
