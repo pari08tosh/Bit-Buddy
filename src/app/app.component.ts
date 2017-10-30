@@ -53,7 +53,7 @@ export class MyApp {
     });
 
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home'},
+      { title: 'Home', component: HomePage, icon: 'home' },
       { title: 'Attendence', component: ListPage, icon: 'checkbox-outline' },
       { title: 'Expenditure', component: ListPage, icon: 'card' },
       { title: 'Todos', component: TodoPage, icon: 'list' },

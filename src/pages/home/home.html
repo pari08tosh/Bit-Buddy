@@ -56,10 +56,10 @@
     </div>
 
     <div class="todo-div" *ngIf="gotTodoData; else loading" padding-top (click)="todoPage()" margin-bottom>
-      <h2>Todo Status</h2>
+      <h2>Todos Status</h2>
       <ion-grid margin-vertical>
         <ion-row>
-          <ion-col margin-bottom col-4 style="border-right: 1px solid white;" padding-right>
+          <ion-col margin-bottom text-center style="border-right: 1px solid white;" padding-right>
             <h1 style="font-size: 300%; position: relative; top: -20px;">{{todoCount}}</h1>
             <h6 style="position: relative; top: -20px;">Tasks Pending</h6>
           </ion-col>
@@ -84,7 +84,7 @@
         <ion-col><button (click)="todoPage()" ion-button icon-only [clear]="true"><ion-icon name="list"></ion-icon></button></ion-col>
         <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="card"></ion-icon></button></ion-col>
         <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="checkbox-outline"></ion-icon></button></ion-col>
-        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="paper"></ion-icon></button></ion-col>
+        <ion-col><button (click)="newsPage()"  ion-button icon-only [clear]="true"><ion-icon name="paper"></ion-icon></button></ion-col>
       </ion-row>
     </ion-grid>
   </div>

@@ -8,6 +8,7 @@ import { FirebaseProvider } from '../../providers/firebase/firebase';
   selector: 'page-edit-todo',
   templateUrl: 'edit-todo.html',
 })
+
 export class EditTodoPage {
 
   heading: String = '';

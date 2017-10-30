@@ -16,6 +16,8 @@ import { LoginPage } from '../pages/login/login';
 import { EditTodoPage } from '../pages/edit-todo/edit-todo';
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
+import { NewsPage } from '../pages/news/news';
+import * as inshorts from 'inshorts';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -31,6 +33,7 @@ import { AlertProvider } from '../providers/alert/alert';
 import { NotificationProvider } from '../providers/notification/notification';
 import { WeatherProvider } from '../providers/weather/weather';
 import { FirebaseProvider } from '../providers/firebase/firebase';
+import { NewsProvider } from '../providers/news/news';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -45,6 +48,7 @@ firebase.initializeApp(firebaseConfig);
     EditTodoPage,
     SettingsPage,
     WeatherPage,
+    NewsPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,7 @@ firebase.initializeApp(firebaseConfig);
     AngularFireModule.initializeApp(firebaseConfig, 'bitBuddy'),
     AngularFirestoreModule,
     HttpModule,
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +68,8 @@ firebase.initializeApp(firebaseConfig);
     LoginPage,
     EditTodoPage,
     SettingsPage,
-    WeatherPage
+    WeatherPage,
+    NewsPage
   ],
   providers: [
     StatusBar,
@@ -79,6 +84,7 @@ firebase.initializeApp(firebaseConfig);
     WeatherProvider,
     Geolocation,
     FirebaseProvider,
+    NewsProvider,
   ]
 })
 export class AppModule {}

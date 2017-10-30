@@ -4,6 +4,7 @@ import { LoginPage } from '../login/login';
 import { ListPage } from '../list/list';
 import { TodoPage } from '../todo/todo';
 import { SettingsPage } from '../settings/settings';
+import { NewsPage } from '../news/news';
 import { WeatherPage } from '../weather/weather';
 import { WeatherProvider } from '../../providers/weather/weather';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
@@ -143,6 +144,10 @@ export class HomePage {
 
   attendencePage() {
     this.navCtrl.push(TodoPage);
+  }
+
+  newsPage() {
+    this.navCtrl.push(NewsPage);
   }
 
   weatherPage() {

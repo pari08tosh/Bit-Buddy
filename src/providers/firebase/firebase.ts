@@ -51,7 +51,6 @@ export class FirebaseProvider {
   }
 
   loggedIn() {
-    console.log('colled me')
     return this.user;
   }
 
