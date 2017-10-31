@@ -28,6 +28,7 @@ import { firebaseConfig } from '../environment';
 import * as firebase from "firebase";
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AlertProvider } from '../providers/alert/alert';
 import { NotificationProvider } from '../providers/notification/notification';
 import { WeatherProvider } from '../providers/weather/weather';
@@ -55,6 +56,7 @@ firebase.initializeApp(firebaseConfig);
     AngularFirestoreModule,
     HttpModule,
     IonicStorageModule.forRoot(),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

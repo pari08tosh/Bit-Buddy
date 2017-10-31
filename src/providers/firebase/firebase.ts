@@ -7,6 +7,7 @@ import { Todo } from '../../models/models';
 import { Platform, AlertController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
+import { AngularFireAuth } from 'angularfire2/auth';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -24,8 +25,9 @@ export class FirebaseProvider {
     public facebook: Facebook,
     private googlePlus: GooglePlus,
     private alertCtrl: AlertController,
+    public afAuth: AngularFireAuth
   ) {
-    firebase.auth().onAuthStateChanged(user => {
+    afAuth.authState.subscribe(user => {
       this.user = user;
       if (user) {
         this.todoCollection = db.collection<Todo>(`todos/${ user.uid }/user-todos`);
@@ -49,7 +51,7 @@ export class FirebaseProvider {
         const facebookCredential = firebase.auth.FacebookAuthProvider
           .credential(response.authResponse.accessToken);
 
-          firebase.auth().signInWithCredential(facebookCredential)
+          this.afAuth.auth.signInWithCredential(facebookCredential)
           .then( success => {
             callback(null);
           }).catch((error) => {
@@ -64,7 +66,7 @@ export class FirebaseProvider {
       // For browser
 
       let provider = new firebase.auth.FacebookAuthProvider();
-      firebase.auth().signInWithPopup(provider).then((result) => {
+      this.afAuth.auth.signInWithPopup(provider).then((result) => {
        callback(null);
       }).catch((error) => {
         callback(error);
@@ -81,7 +83,7 @@ export class FirebaseProvider {
         'webClientId': '935417274512-sf04s8s7ctkhpdj2t9aieold7uitmkh9.apps.googleusercontent.com',
         'offline': true
       }).then( res => {
-        firebase.auth().signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
+        this.afAuth.auth.signInWithCredential(firebase.auth.GoogleAuthProvider.credential(res.idToken))
           .then( success => {
             callback(null);
           }).catch((error) => {
@@ -96,12 +98,12 @@ export class FirebaseProvider {
       // For Browser
 
       let provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider).then((result) => {
+      this.afAuth.auth.signInWithPopup(provider).then((result) => {
         callback(null);
-      }).catch((error) => {
-        callback(error);
-        this.handleError(error);
-       });
+       }).catch((error) => {
+         callback(error);
+         this.handleError(error);
+        });
     }
   }
 

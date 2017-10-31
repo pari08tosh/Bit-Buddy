@@ -39,7 +39,7 @@ export class LoginPage {
     });
     loading.present();
 
-    this.firebaseProvider.loginByFacebook((error) => {
+    this.firebaseProvider.loginByGoogle((error) => {
       loading.dismiss();
       if (error) {
         return

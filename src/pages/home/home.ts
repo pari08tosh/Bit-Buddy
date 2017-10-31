@@ -7,7 +7,8 @@ import { NewsPage } from '../news/news';
 import { WeatherPage } from '../weather/weather';
 import { WeatherProvider } from '../../providers/weather/weather';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
-import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 
 @Component({
@@ -37,12 +38,14 @@ export class HomePage {
     public weatherProvider: WeatherProvider,
     public loadingCtrl: LoadingController,
     public firebaseProvider: FirebaseProvider,
+    public afAuth: AngularFireAuth    
   ) {
     this.user = null;
   }
 
   ionViewCanEnter() {
-    firebase.auth().onAuthStateChanged(user => {
+    this.afAuth.authState.subscribe(user => {
+      console.log(user);
       if (user) {
         this.user = user;
         return true;
@@ -50,8 +53,7 @@ export class HomePage {
         this.navCtrl.setRoot(LoginPage);
         return false;
       }
-    });
-
+    }).unsubscribe();
   }
 
   ngOnDestroy() {
@@ -72,15 +74,16 @@ export class HomePage {
         this.wish = `Good Evening`;
       }
     }
-    firebase.auth().onAuthStateChanged(user => {
+    this.afAuth.authState.subscribe(user => {
       if (user) {
         this.userName = user.displayName.split(' ')[0];
         this.photoURL = user.photoURL;
         this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
-          console.log(data);
           this.todoCount = data.length;
           if (data.length !== 0) {
             this.firstTodo = data[0].heading;
+          } else {
+            this.firstTodo = '--';
           }
           this.gotTodoData = true;
           if (!this.ref['destroyed']) {
@@ -113,7 +116,6 @@ export class HomePage {
   // weather to be loaded on each page load
   ionViewDidEnter() {
     this.showWeather = false;
-    console.log("entered page");
     this.weatherProvider.getLocation(city => {
       this.currentCity = city;
       this.weatherProvider.getCurrentWeather(this.currentCity).subscribe(

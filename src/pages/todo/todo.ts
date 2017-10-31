@@ -32,12 +32,10 @@ export class TodoPage {
   }
 
   ionViewDidLoad() {
-    console.log('in page');
     this.user = this.firebaseProvider.loggedIn();
     if (this.user) {
       this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
         this.todoList = data;
-        console.log(this.todoList);
         this.gotData = true;
         if (!this.ref['destroyed']) {
           this.ref.detectChanges();
