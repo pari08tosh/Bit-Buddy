@@ -87,7 +87,6 @@ export class SettingsPage {
         this.ref.detectChanges();
       }
     }).catch((error) => {
-      console.log(error.message);
       loading.dismiss();
       let alert = this.alertCtrl.create({
         title: 'Location Not Found',

@@ -20,7 +20,6 @@ export class NotificationProvider {
 
   enableNotifications() {
     if (this.enabled) {
-      console.log(`noti alredy enabled`);
       return;
     }
     this.enabled = true;

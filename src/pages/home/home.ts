@@ -45,7 +45,6 @@ export class HomePage {
 
   ionViewCanEnter() {
     this.afAuth.authState.subscribe(user => {
-      console.log(user);
       if (user) {
         this.user = user;
         return true;
