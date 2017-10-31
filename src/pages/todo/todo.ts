@@ -1,5 +1,5 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { WriteTodoPage } from '../write-todo/write-todo';
 import { EditTodoPage } from '../edit-todo/edit-todo';
 import { AlertProvider } from '../../providers/alert/alert';
@@ -24,7 +24,6 @@ export class TodoPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams,
     public alertProvider: AlertProvider,
     public ref: ChangeDetectorRef,
     public firebaseProvider: FirebaseProvider,

@@ -2,15 +2,14 @@ import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import * as firebase from 'firebase/app';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { TodoPage } from '../pages/todo/todo';
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { NotificationProvider } from '../providers/notification/notification';
+import * as firebase from 'firebase/app';
 
 
 
@@ -54,8 +53,6 @@ export class MyApp {
 
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Attendence', component: ListPage, icon: 'checkbox-outline' },
-      { title: 'Expenditure', component: ListPage, icon: 'card' },
       { title: 'Todos', component: TodoPage, icon: 'list' },
       { title: 'Weather', component: WeatherPage, icon: 'partly-sunny' },
       { title: 'Settings', component: SettingsPage, icon: 'settings' }

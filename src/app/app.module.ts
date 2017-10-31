@@ -9,7 +9,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { TodoPage } from '../pages/todo/todo';
 import { WriteTodoPage } from '../pages/write-todo/write-todo';
 import { LoginPage } from '../pages/login/login';
@@ -41,7 +40,6 @@ firebase.initializeApp(firebaseConfig);
   declarations: [
     MyApp,
     HomePage,
-    ListPage,
     TodoPage,
     WriteTodoPage,
     LoginPage,
@@ -62,7 +60,6 @@ firebase.initializeApp(firebaseConfig);
   entryComponents: [
     MyApp,
     HomePage,
-    ListPage,
     TodoPage,
     WriteTodoPage,
     LoginPage,
