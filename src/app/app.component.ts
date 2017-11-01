@@ -9,7 +9,8 @@ import { WeatherPage } from '../pages/weather/weather';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { NotificationProvider } from '../providers/notification/notification';
-import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+
 
 
 
@@ -36,11 +37,10 @@ export class MyApp {
     public ref: ChangeDetectorRef,
     private localNotifications: LocalNotifications,
     public notificationProvider: NotificationProvider,
-
-
+    public afAuth: AngularFireAuth   
   ) {
     this.initializeApp();
-    firebase.auth().onAuthStateChanged((user) => {
+    this.afAuth.authState.subscribe(user =>{
       if (user) {
         this.notificationProvider.enableNotifications();
         this.username = user.displayName;

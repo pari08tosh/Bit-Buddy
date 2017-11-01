@@ -52,7 +52,7 @@ export class HomePage {
         this.navCtrl.setRoot(LoginPage);
         return false;
       }
-    }).unsubscribe();
+    });
   }
 
   ngOnDestroy() {
@@ -151,6 +151,12 @@ export class HomePage {
 
   weatherPage() {
     this.navCtrl.push(WeatherPage);
+  }
+
+  ionViewWillUnload() {
+    if (this.todoObservable) {
+      this.todoObservable.unsubscribe();
+    }
   }
 
 }

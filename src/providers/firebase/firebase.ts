@@ -30,7 +30,7 @@ export class FirebaseProvider {
     afAuth.authState.subscribe(user => {
       this.user = user;
       if (user) {
-        this.todoCollection = db.collection<Todo>(`todos/${ user.uid }/user-todos`);
+        this.todoCollection = this.db.collection<Todo>(`todos/${ this.user.uid }/user-todos`);
       }
     });
 
@@ -117,6 +117,12 @@ export class FirebaseProvider {
         const id = a.payload.doc.id;
         return { id, ...data };
       });
+    });
+  }
+
+  logout(callback) {
+    this.afAuth.auth.signOut().then(() => {
+      callback();
     });
   }
 

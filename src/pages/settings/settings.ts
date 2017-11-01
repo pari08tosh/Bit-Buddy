@@ -1,12 +1,12 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import * as firebase from 'firebase/app';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LoginPage } from '../login/login';
 import { NotificationProvider } from '../../providers/notification/notification';
 import { WeatherProvider } from '../../providers/weather/weather';
 import { Storage } from '@ionic/storage';
 import { Geolocation } from '@ionic-native/geolocation'
+import { FirebaseProvider } from '../../providers/firebase/firebase';
 
 @Component({
   selector: 'page-settings',
@@ -36,6 +36,7 @@ export class SettingsPage {
     private alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
     public ref: ChangeDetectorRef,
+    public firebaseProvider: FirebaseProvider,
   ) {
   }
 
@@ -120,7 +121,7 @@ export class SettingsPage {
 
 
   logoutFunc() {
-    firebase.auth().signOut().then(() => {
+    this.firebaseProvider.logout(() => {
       this.notificationProvider.disableNotifications();
       this.navCtrl.setRoot(LoginPage, {}, { animate: true, direction: 'forward'});
     });
