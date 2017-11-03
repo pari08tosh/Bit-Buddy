@@ -9,24 +9,43 @@
 
 
 <ion-content padding>
+  <div *ngIf='haveData; else loading'>
+    <div *ngIf='!error; else errorTemplate'>
+      <div *ngFor = 'let news of newsArray'>
+        <ion-card class="news-card" (click)="newsClick(news.url)">
+          <img src="{{news.urlToImage}}"/>
+          <ion-card-content>
+            <ion-card-title>
+              {{news.title}}
+            </ion-card-title>
+            <p>
+              {{news.description}}
+            </p>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+  <ng-template #loading>
+    <p text-center>
+        <ion-spinner name="crescent"></ion-spinner>
+    </p>
+  </ng-template>
+  <ng-template #errorTemplate text-center>
+      <p text-center>There was an error. Please try again later</p>
+  </ng-template>
 </ion-content>
 
 <ion-footer class="news-footer">
   <ion-segment [ngModel] = "segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="national" icon-only>
-      <ion-icon name="flag"></ion-icon>
+    <ion-segment-button value="hindu">
+      The Hindu
     </ion-segment-button>
-    <ion-segment-button value="world" icon-only>
-      <ion-icon name="globe"></ion-icon>
+    <ion-segment-button value="toi">
+      TOI
     </ion-segment-button>
-    <ion-segment-button value="sports">
-      <ion-icon name="american-football"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="science">
-      <ion-icon name="planet"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="technology">
-      <ion-icon name="musical-notes"></ion-icon>
+    <ion-segment-button value="hacker">
+      Hacker News
     </ion-segment-button>
   </ion-segment>
 </ion-footer>

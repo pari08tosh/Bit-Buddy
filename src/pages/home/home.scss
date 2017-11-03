@@ -17,7 +17,7 @@
 }
 
 .intro-div, .todo-div {
-  background-color: #2980b9;
+  background-color: color($colors, secondary);
   color: white !important;
   background-attachment: fixed;
 }

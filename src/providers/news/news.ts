@@ -1,19 +1,32 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import * as Inshorts from 'inshorts';
-/*
-  Generated class for the NewsProvider provider.
 
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
+
+
 @Injectable()
 export class NewsProvider {
 
-  inshorts: any;
+  apikey: String = '33aa14e2714c4395ad1ff7d14370a4c2';
 
   constructor(public http: Http) {
-    this.inshorts = Inshorts.init();
   }
+
+  getHinduNews() {
+    return this.http.get(`https://newsapi.org/v1/articles?source=the-hindu&sortBy=top&apiKey=${this.apikey}`)
+    .map(res => res.json());
+  }
+
+  getToiNews() {
+    return this.http.get(`https://newsapi.org/v1/articles?source=the-times-of-india&sortBy=top&apiKey=${this.apikey}`)
+    .map(res => res.json());
+  }
+
+  getHackerNews() {
+    return this.http.get(`https://newsapi.org/v1/articles?source=hacker-news&sortBy=top&apiKey=${this.apikey}`)
+    .map(res => res.json());
+  }
+
+
+
 }

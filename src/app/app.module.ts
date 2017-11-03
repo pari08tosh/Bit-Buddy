@@ -6,6 +6,8 @@ import { HttpModule } from '@angular/http';
 import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Geolocation } from '@ionic-native/geolocation';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -16,7 +18,6 @@ import { EditTodoPage } from '../pages/edit-todo/edit-todo';
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
 import { NewsPage } from '../pages/news/news';
-import * as inshorts from 'inshorts';
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -84,6 +85,7 @@ firebase.initializeApp(firebaseConfig);
     Geolocation,
     FirebaseProvider,
     NewsProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

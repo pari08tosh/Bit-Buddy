@@ -1,6 +1,11 @@
 
 .news-footer {
   ion-segment-button {
-    font-size: 200% !important;
+    font-size: 110% !important;
   }
+}
+
+.news-card {
+  margin: 20px auto;
+  cursor: pointer;
 }
