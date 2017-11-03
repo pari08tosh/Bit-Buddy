@@ -1,26 +1,50 @@
-This is a starter template for [Ionic](http://ionicframework.com/docs/) projects.
+# Bit Buddy
 
-## How to use this template
+Bit Buddy is an hybrid productivity app built with ionic and firebase. It includes features which are required by almost all college students in their daily life.
 
-*This template does not work on its own*. The shared files for each starter are found in the [ionic2-app-base repo](https://github.com/ionic-team/ionic2-app-base).
+## Authentication
 
-To use this template, either create a new ionic project using the ionic node.js utility, or copy the files from this repository into the [Starter App Base](https://github.com/ionic-team/ionic2-app-base).
+ Login is through facebook or google. All user data is stored on firestore with well defined security rules. Currently the app is tested for android and browser compatibility. 
 
-### With the Ionic CLI:
+## Easy data access
 
-Take the name after `ionic2-starter-`, and that is the name of the template to be used when using the `ionic start` command below:
+ As data is not localised to the device, one can log into the app on any device, or visit the website for the app to update his data.
+
+## Features 
+
+1. **Todo Manager**: An easy to maintain todo manager to keep track of everyday tasks. Includes notifications to remind users about pending todos.
+2. **Weather**: Uses the openweatherapi to show regular weather updates. One can select city or use geo-location to set the location.
+3. **News**: Uses the api from newsapi.org to show live updates from The Hindu, Times Of India and Hacker News. Also includes an in-app-browser to help view full articles on their respective websites.
+
+## Installation
+
+The app is based on Ionic 3 and uses all the standard ionic-cli commands.
+
+1. Install all dependecies: 
+
+  ```bash
+  $ sudo npm install
+  ```
+2. Run the standard ionic-cli commands to start the app. 
+Example: ionic serve to start a live server.  
 
 ```bash
-$ sudo npm install -g ionic cordova
-$ ionic start mySideMenu sidemenu
+$ ionic serve
 ```
 
-Then, to run it, cd into `mySideMenu` and run:
+## Setting up firebase
 
-```bash
-$ ionic cordova platform add ios
-$ ionic cordova run ios
-```
+Currently the app has been set to use my own firebase account for authentication and storage. To use your own firebase account, you need to take the following steps.
 
-Substitute ios for android if not on a Mac.
+1. Set up the project for Bit Buddy on firebase.
+2. Replace firebase config object in environment.ts file with your own project details.
+3. Copy the rules given in firestore-rules.txt file into your firestore rules.
+4. Register your app for google and facebook authentication.
+
+
+
+
+
+
+
 
