@@ -3,6 +3,13 @@
   src: url('../assets/fonts/ubuntu.woff2') format('woff2');
 }
 
+
+@media (min-width: 768px) {
+  .hidden-lg {
+    display: none !important;
+  }
+}
+
 .nav-items:hover
 {
   background-color: color($colors, light);
@@ -14,41 +21,30 @@ ion-nav{
   justify-content: center;
 }
 
-.ion-page, ion-toast {
-  max-width: 400px;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  box-shadow: 0px 0px 15px #a7a7a7;
-}
-
 .scroll-content::-webkit-scrollbar {
     width: .5em;
 }
 
-.scroll-content::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-}
+.toolbar-md {
+  height: 56px !important;
+} 
 
-.scroll-content::-webkit-scrollbar-thumb {
-  background-color: color($colors, primary);
-  outline: 1px solid slategrey;
+.scroll-content::-webkit-scrollbar {
+  width: 0px;  /* remove scrollbar space */
+  background: transparent;  /* optional: just make scrollbar invisible */
 }
 
 .top-temp {
   font-size: 170%;
 }
 
-.top-settings {
-  font-size: 120%;
+
+.orange {
+  color: color($colors, orange);
 }
 
-ion-title {
-  text-align: center;
-  position: relative;
-  left: -10%;
+.top-settings {
+  font-size: 120%;
 }
 
 .nav-title {

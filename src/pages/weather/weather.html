@@ -15,22 +15,22 @@
         <ion-col col-6>
           <img width="120" height="120" src="http://openweathermap.org/img/w/{{currentWeather.weather[0].icon }}.png">
         </ion-col>
-        <ion-col col-6 margin-top>
+        <ion-col col-6 margin-top class="orange">
           <h1 class="temp">{{currentWeather.main.temp}} &#8451;</h1>
           <h6 text-uppercase>{{currentWeather.weather[0].description}}</h6>
         </ion-col>
       </ion-row>
     </ion-grid>
-    <h2><ion-icon name="pin" class="pin-icon"></ion-icon> {{currentWeather.name}}, {{currentWeather.sys.country}}</h2>
+    <h2 class="orange"><ion-icon name="pin" class="pin-icon"></ion-icon> {{currentWeather.name}}, {{currentWeather.sys.country}}</h2>
     <br />
     <ion-grid>
       <ion-row>
         <ion-col>
-          <h3> {{dailyWeather.list[0].temp.max}} &#8451;</h3>
+          <h3> {{dailyWeather.list[1].temp.max}} &#8451;</h3>
           <h6><strong>Max Temp</strong></h6>
         </ion-col>
         <ion-col>
-          <h3> {{dailyWeather.list[0].temp.min}} &#8451;</h3>
+          <h3> {{dailyWeather.list[1].temp.min}} &#8451;</h3>
           <h6><strong>Min Temp</strong></h6>
         </ion-col>
         <ion-col>
@@ -55,7 +55,7 @@
       <ion-row margin-top>
       </ion-row>
     </ion-grid>
-    <h2>Three Day Forecast</h2>
+    <h2 class="orange">Three Day Forecast</h2>
     <ion-grid margin-bottom>
       <ion-row class="forecast">
         <ion-col>

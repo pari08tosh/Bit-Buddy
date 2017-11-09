@@ -13,30 +13,36 @@
   </div>
   <ng-template #haveData>
     <div *ngIf = 'todoList.length > 0; else noTodos'>
-      <ion-card *ngFor = "let todo of todoList" class="todo-cards animated fadeIn">
-        <ion-item style="text-align: center">
-          <h2 class="todo-heading">{{todo.heading}}</h2>
-        </ion-item>
-        <ion-card-content>
-          <p style="font-size: 105%;">{{todo.description}}</p>
-          <hr>
-          <p><i>Deadline:- {{todo.deadline | date:"dd MMM, hh:mm a"}}</i></p>
-        </ion-card-content>
-        <ion-row style="text-align: center">
-          <ion-col>
-            <button (click)="editTodo(todo)" ion-button icon-left clear small color="blue">
-              <ion-icon name="create"></ion-icon>
-              <div>Edit</div>
-            </button>
-          </ion-col>
-          <ion-col>
-            <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="secondary">
-              <ion-icon name="checkmark-circle-outline"></ion-icon>
-              <div>Done</div>
-            </button>
+      <ion-grid>
+        <ion-row align-items-center>
+          <ion-col col-12 col-sm-6 *ngFor = "let todo of todoList" >
+              <ion-card class="todo-cards animated fadeIn">
+                  <ion-item style="text-align: center">
+                    <h2 class="todo-heading">{{todo.heading}}</h2>
+                  </ion-item>
+                  <ion-card-content>
+                    <p style="font-size: 105%;">{{todo.description}}</p>
+                    <hr>
+                    <p><i>Deadline:- {{todo.deadline | date:"dd MMM, hh:mm a"}}</i></p>
+                  </ion-card-content>
+                  <ion-row style="text-align: center">
+                    <ion-col>
+                      <button (click)="editTodo(todo)" ion-button icon-left clear small color="blue">
+                        <ion-icon name="create"></ion-icon>
+                        <div>Edit</div>
+                      </button>
+                    </ion-col>
+                    <ion-col>
+                      <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="secondary">
+                        <ion-icon name="checkmark-circle-outline"></ion-icon>
+                        <div>Done</div>
+                      </button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card>
           </ion-col>
         </ion-row>
-      </ion-card>
+      </ion-grid>
     </div>
 
     <ng-template #noTodos class="no-todo-div">

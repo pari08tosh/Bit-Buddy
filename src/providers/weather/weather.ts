@@ -220,20 +220,20 @@ export class WeatherProvider {
 
   getCurrentWeather(city) {
     if (city.gps)  {
-      return this.http.get(`http://api.openweathermap.org/data/2.5/weather?lon=${city.coord.lon}&lat=${city.coord.lat}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
+      return this.http.get(`https://api.openweathermap.org/data/2.5/weather?lon=${city.coord.lon}&lat=${city.coord.lat}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
          .map(res => res.json());
     } else {
-      return this.http.get(`http://api.openweathermap.org/data/2.5/weather?id=${city.id}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
+      return this.http.get(`https://api.openweathermap.org/data/2.5/weather?id=${city.id}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
          .map(res => res.json());
     }
   }
 
   getDailyWeather(city) {
     if (city.gps) {
-      return this.http.get(`http://api.openweathermap.org/data/2.5/forecast/daily?lon=${city.coord.lon}&lat=${city.coord.lat}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
+      return this.http.get(`https://api.openweathermap.org/data/2.5/forecast/daily?lon=${city.coord.lon}&lat=${city.coord.lat}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
          .map(res => res.json());
     } else {
-      return this.http.get(`http://api.openweathermap.org/data/2.5/forecast/daily?id=${city.id}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
+      return this.http.get(`https://api.openweathermap.org/data/2.5/forecast/daily?id=${city.id}&APPID=1b0022354c1954527d54057d00fefbfa&units=metric`)
          .map(res => res.json());
     }
   }

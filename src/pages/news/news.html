@@ -11,19 +11,25 @@
 <ion-content padding>
   <div *ngIf='haveData; else loading'>
     <div *ngIf='!error; else errorTemplate'>
-      <div *ngFor = 'let news of newsArray'>
-        <ion-card class="news-card" (click)="newsClick(news.url)">
-          <img src="{{news.urlToImage}}"/>
-          <ion-card-content>
-            <ion-card-title>
-              {{news.title}}
-            </ion-card-title>
-            <p>
-              {{news.description}}
-            </p>
-          </ion-card-content>
-        </ion-card>
-      </div>
+      <ion-grid>
+        <ion-row align-items-center>
+          <ion-col col-12 col-sm-6 *ngFor = 'let news of newsArray'>
+              <div>
+                  <ion-card class="news-card" (click)="newsClick(news.url)">
+                    <img src="{{news.urlToImage}}"/>
+                    <ion-card-content>
+                      <ion-card-title class="orange">
+                        {{news.title}}
+                      </ion-card-title>
+                      <p>
+                        {{news.description}}
+                      </p>
+                    </ion-card-content>
+                  </ion-card>
+                </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </div>
   </div>
   <ng-template #loading>

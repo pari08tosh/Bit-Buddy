@@ -4,6 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { TodoPage } from '../pages/todo/todo';
+import { NewsPage } from '../pages/news/news';
+
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
 import { BackgroundMode } from '@ionic-native/background-mode';
@@ -55,6 +57,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: 'home' },
       { title: 'Todos', component: TodoPage, icon: 'list' },
       { title: 'Weather', component: WeatherPage, icon: 'partly-sunny' },
+      { title: 'News', component: NewsPage, icon: 'paper' },
       { title: 'Settings', component: SettingsPage, icon: 'settings' }
     ];
   }
