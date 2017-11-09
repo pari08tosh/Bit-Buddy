@@ -47,10 +47,10 @@ export class MyApp {
         this.notificationProvider.enableNotifications();
         this.username = user.displayName;
         this.photoURL = user.photoURL;
-        this.ref.detectChanges();
       } else {
-        // No user is signed in.
+        this.username = "";
       }
+      this.ref.detectChanges();
     });
 
     this.pages = [

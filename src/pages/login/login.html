@@ -9,11 +9,25 @@
   <div class="inner-login-content">
     <img src="assets/images/logo.png" height="100px"/>
     <br>
-    <p>BIT Buddy is a simple app designed to assist you in your day to day events in BIT. It will give you weather updates and help you keep memos.</p>
+    <br>
+    <p>BIT Buddy understands your needs and is here to make your life a bit
+      easier.We understand that it is the small stuff which makes the biggest difference. 
+      Bit Buddy includes a todo-manager, news section and a weather service. Login to continue.
+    </p>
     <br>
     <br>
-    <button (click)="googleLogin()" ion-button color="light" icon-left full><ion-icon name="logo-googleplus"></ion-icon> Login with Google</button>
-    <h3>OR</h3>
-    <button (click)="facebookLogin()" ion-button color="blue" icon-left full><ion-icon name="logo-facebook"></ion-icon> Login with Facebook</button>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-12 col-sm-5>
+          <button (click)="googleLogin()" ion-button color="light" icon-left full><ion-icon name="logo-googleplus"></ion-icon> Login with Google</button>
+        </ion-col>
+        <ion-col col-12 col-sm-2>
+          <h3>OR</h3>
+        </ion-col>
+        <ion-col col-12 col-sm-5>
+          <button (click)="facebookLogin()" ion-button color="blue" icon-left full><ion-icon name="logo-facebook"></ion-icon> Login with Facebook</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
