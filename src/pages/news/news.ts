@@ -27,6 +27,32 @@ export class NewsPage {
     this.haveData = false;
   }
 
+  swipe(event) {
+    if (event.direction == '2') {
+      if (this.segment == 'hindu') {
+        this.segment = 'toi'
+        return this.segmentChanged({ _value: 'toi'});
+      } else {
+        if (this.segment == 'toi') {
+          this.segment = 'hacker'
+          return this.segmentChanged({ _value: 'hacker'});
+        }
+      }
+    }
+    if (event.direction == '4') {
+      if (this.segment == 'hacker') {
+        this.segment = 'toi'
+        return this.segmentChanged({ _value: 'toi'});
+      } else {
+        if (this.segment == 'toi') {
+          this.segment = 'hindu'
+          return this.segmentChanged({ _value: 'hindu'});
+        }
+      }
+    }
+    
+  };
+
 
   segmentChanged(event) {
     this.haveData = false;
@@ -34,7 +60,6 @@ export class NewsPage {
     if (event._value == 'hindu') {
       this.newsProvider.getHinduNews().subscribe(
         data => {
-          console.log(data);
           if (data.status === 'ok') {
             this.newsArray = data.articles;
           } else {
@@ -59,7 +84,6 @@ export class NewsPage {
     if (event._value == 'toi') {
       this.newsProvider.getToiNews().subscribe(
         data => {
-          console.log(data);
           if (data.status === 'ok') {
             this.newsArray = data.articles;
           } else {
@@ -84,7 +108,6 @@ export class NewsPage {
     if (event._value == 'hacker') {
       this.newsProvider.getHackerNews().subscribe(
         data => {
-          console.log(data);
           if (data.status === 'ok') {
             this.newsArray = data.articles;
           } else {

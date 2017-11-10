@@ -16,8 +16,8 @@
     <ion-content>
       <ion-list no-lines style="padding-top: 20px;">
         <button menuClose ion-item *ngFor="let p of pages" class="nav-items" (click)="openPage(p)">
-          <ion-icon style="position: relative; left: 5%;" name="{{p.icon}}" item-start></ion-icon>
-          <span style="position: relative; left: 5%;">{{p.title}}</span>
+          <ion-icon style="position: relative; left: 5%;" color="{{p.class}}" name="{{p.icon}}" item-start></ion-icon>
+          <span style="position: relative; left: 5%;" class="{{p.class}}">{{p.title}}</span>
         </button>
       </ion-list>
     </ion-content>

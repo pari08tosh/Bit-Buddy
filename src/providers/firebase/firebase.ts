@@ -44,8 +44,18 @@ export class FirebaseProvider {
 
   loginByFacebook(callback) {
 
-    // for android and ios
-    if (this.platform.is('android') || this.platform.is('ios')) {
+    if (this.platform.is('core') || this.platform.is('mobileweb')) {
+      // for browser
+      let provider = new firebase.auth.FacebookAuthProvider();
+      this.afAuth.auth.signInWithPopup(provider).then((result) => {
+       callback(null);
+      }).catch((error) => {
+        callback(error);
+        this.handleError(error);
+       });
+
+    } else {
+      // for android and ios
       this.facebook.login(['email'])
       .then( response => {
         const facebookCredential = firebase.auth.FacebookAuthProvider
@@ -62,23 +72,25 @@ export class FirebaseProvider {
         callback(error);
         this.handleError(error);
       });
-    } else {
-      // For browser
-
-      let provider = new firebase.auth.FacebookAuthProvider();
-      this.afAuth.auth.signInWithPopup(provider).then((result) => {
-       callback(null);
-      }).catch((error) => {
-        callback(error);
-        this.handleError(error);
-       });
     }
   }
 
   loginByGoogle(callback) {
 
-    // For Android and Ios.
-    if (this.platform.is('android') || this.platform.is('ios')) {
+    // For browser.
+
+    if (this.platform.is('core') || this.platform.is('mobileweb')) {
+
+      let provider = new firebase.auth.GoogleAuthProvider();
+      this.afAuth.auth.signInWithPopup(provider).then((result) => {
+        callback(null);
+       }).catch((error) => {
+         callback(error);
+         this.handleError(error);
+        });
+    } else {
+
+      // For android and ios
       this.googlePlus.login({
         'webClientId': '935417274512-sf04s8s7ctkhpdj2t9aieold7uitmkh9.apps.googleusercontent.com',
         'offline': true
@@ -94,16 +106,6 @@ export class FirebaseProvider {
         callback(error);
         this.handleError(error);
       });
-    } else {
-      // For Browser
-
-      let provider = new firebase.auth.GoogleAuthProvider();
-      this.afAuth.auth.signInWithPopup(provider).then((result) => {
-        callback(null);
-       }).catch((error) => {
-         callback(error);
-         this.handleError(error);
-        });
     }
   }
 

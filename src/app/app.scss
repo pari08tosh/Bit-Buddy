@@ -10,16 +10,15 @@
   }
 }
 
+.main-menu-active {
+  color: color($colors, orange);
+}
+
 .nav-items:hover
 {
   background-color: color($colors, light);
 }
 
-ion-nav{
-  background-image: url("../assets/images/back.jpg");
-  display: flex;
-  justify-content: center;
-}
 
 .scroll-content::-webkit-scrollbar {
     width: .5em;
@@ -41,6 +40,10 @@ ion-nav{
 
 .orange {
   color: color($colors, orange);
+}
+
+.green {
+  color: color($colors, primary);
 }
 
 .top-settings {

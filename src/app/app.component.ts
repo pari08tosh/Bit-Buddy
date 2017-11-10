@@ -29,7 +29,7 @@ export class MyApp {
   username: String = "";
   photoURL: String = "";
 
-  pages: Array<{title: string, component: any, icon: string}>;
+  pages: Array<{title: string, component: any, icon: string, class: string}>;
 
   constructor(
     public platform: Platform,
@@ -54,11 +54,11 @@ export class MyApp {
     });
 
     this.pages = [
-      { title: 'Home', component: HomePage, icon: 'home' },
-      { title: 'Todos', component: TodoPage, icon: 'list' },
-      { title: 'Weather', component: WeatherPage, icon: 'partly-sunny' },
-      { title: 'News', component: NewsPage, icon: 'paper' },
-      { title: 'Settings', component: SettingsPage, icon: 'settings' }
+      { title: 'Home', component: HomePage, icon: 'home', class: 'green' },
+      { title: 'Todos', component: TodoPage, icon: 'list', class: '' },
+      { title: 'Weather', component: WeatherPage, icon: 'partly-sunny', class: '' },
+      { title: 'News', component: NewsPage, icon: 'paper', class: '' },
+      { title: 'Settings', component: SettingsPage, icon: 'settings', class: '' }
     ];
   }
 
@@ -99,6 +99,14 @@ export class MyApp {
   }
 
   openPage(page) {
+    for (let i = 0; i < this.pages.length; i++) {
+      if (this.pages[i].title === page.title) {
+        this.pages[i].class = 'green';
+      } else {
+        this.pages[i].class = '';
+      }
+    }
     this.nav.setRoot(page.component);
+    this.ref.detectChanges();
   }
 }

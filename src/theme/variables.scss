@@ -16,6 +16,7 @@ $colors: (
   blue:     #2980b9,
   orange:   #d35400,
   red:      #c0392b,
+  green:    #16a085
 );
 // Overwriding statements
 
@@ -31,6 +32,10 @@ $font-family-base: 'Ubuntu';
 $font-family-ios-base: 'Ubuntu';
 $font-family-md-base: 'Ubuntu';
 $font-family-wp-base: 'Ubuntu';
+
+
+$segment-button-md-border-color-activated: color($colors, orange);
+$segment-button-md-border-bottom-width: 4px;
 
 
 @import "ionic.theme.default";

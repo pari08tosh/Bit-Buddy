@@ -19,7 +19,10 @@ self.toolbox.precache(
     './build/main.css',
     './build/polyfills.js',
     'index.html',
-    'manifest.json'
+    'manifest.json',
+    './assets/images/logo.png',
+    './assets/fonts/ubuntu.woff2',
+    './assets/css/animate.css',    
   ]
 );
 
