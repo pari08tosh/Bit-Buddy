@@ -21,18 +21,12 @@
 <ion-content overflow-scroll="false" text-center>
   <div class="whole-content" *ngIf="showContent; else loading" animated fadeInUp>
     <div class="intro-div">
-      <ion-grid class="user-row">
-        <ion-row>
-          <ion-col col-12>
-            <ion-avatar>
-              <img class="avatar" src="{{photoURL}}" alt="">
-            </ion-avatar>
-          </ion-col>
-          <ion-col col-12>
-            <h2 class="user-name">{{wish}} {{userName}}</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <div>
+        <ion-avatar style="padding-top: 30px;">
+          <img class="avatar" src="{{photoURL}}" alt="">
+        </ion-avatar>
+        <h2 class="user-name">{{wish}} {{userName}}</h2>
+      </div>
 
       <div class="quote" margin-bottom>
         <h4 text-center padding-horizontal >"{{quote}}"</h4>
@@ -55,13 +49,13 @@
       </ion-grid>
     </div>
 
-    <div class="todo-div" *ngIf="gotTodoData; else loading" padding-top (click)="todoPage()" margin-bottom>
+    <div class="todo-div" *ngIf="gotTodoData; else loading" padding-top (click)="todoPage()" padding-bottom>
       <h2>Todos Status</h2>
       <ion-grid margin-vertical>
         <ion-row>
           <ion-col margin-bottom text-center style="border-right: 1px solid white;" padding-right>
             <h1 style="font-size: 300%; position: relative; top: -20px;">{{todoCount}}</h1>
-            <h6 style="position: relative; top: -20px;">Tasks Pending</h6>
+            <h6 style="position: relative; top: -20px;">Task(s) Pending</h6>
           </ion-col>
           <ion-col>
             <h4>Latest</h4>
@@ -70,8 +64,28 @@
         </ion-row>
       </ion-grid>
     </div>
-  </div>
 
+    <div padding-top *ngIf="haveExpenditures">
+      <h2 padding-bottom>This Months Expenses - &#x20b9; {{totalExpenditure}}</h2>
+      <canvas id="myChart" width="1000" height="1000"></canvas>
+    </div>
+
+    <div class="debt-div" *ngIf="haveDebts; else loading" padding-top (click)="debtsPage()" padding-bottom>
+      <h2>Debts & Credits</h2>
+      <ion-grid margin-vertical>
+        <ion-row>
+          <ion-col margin-bottom text-center style="border-right: 1px solid white;" padding-right>
+            <h4>Debt</h4>
+            <h2>&#x20b9; {{totalDebt}}</h2>
+          </ion-col>
+          <ion-col>
+            <h4>Credit</h4>
+            <h2>&#x20b9; {{totalCredit}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
   <ng-template #loading>
     <ion-spinner name="crescent"></ion-spinner>
   </ng-template>
@@ -82,8 +96,8 @@
     <ion-grid>
       <ion-row>
         <ion-col><button (click)="todoPage()" ion-button icon-only [clear]="true"><ion-icon name="list"></ion-icon></button></ion-col>
-        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="card"></ion-icon></button></ion-col>
-        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="checkbox-outline"></ion-icon></button></ion-col>
+        <ion-col><button (click)="expensesPage()"  ion-button icon-only [clear]="true"><ion-icon name="card"></ion-icon></button></ion-col>
+        <ion-col><button (click)="todoPage()"  ion-button icon-only [clear]="true"><ion-icon name="checkmark-circle-outline"></ion-icon></button></ion-col>
         <ion-col><button (click)="newsPage()"  ion-button icon-only [clear]="true"><ion-icon name="paper"></ion-icon></button></ion-col>
       </ion-row>
     </ion-grid>

@@ -3,7 +3,7 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { TodoPage } from '../../pages/todo/todo';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { FirebaseProvider } from '../firebase/firebase';
+import { TodoProvider } from '../todo/todo';
 
 
 
@@ -19,7 +19,7 @@ export class NotificationProvider {
     private backgroundMode: BackgroundMode,
     private localNotifications: LocalNotifications,
     public afAuth: AngularFireAuth,
-    public firebaseProvider: FirebaseProvider,       
+    public todoProvider: TodoProvider,       
   ) {
     this.backgroundMode.setDefaults({ silent: true })
   }
@@ -38,7 +38,7 @@ export class NotificationProvider {
             let tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
             let currentDate = new Date(Date.now() - tzoffset)
             let maxDate = new Date(Date.now() - tzoffset + 1000*60*60*24);
-            this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
+            this.todoObservable = this.todoProvider.getTodos().subscribe(data => {
               data.forEach(todo => {
                 let todoDate = new Date(Date.parse(String(todo.deadline)) - tzoffset);
                 if (todoDate >= currentDate && todoDate <= maxDate ) {

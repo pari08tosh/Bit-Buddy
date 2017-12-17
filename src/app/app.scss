@@ -19,19 +19,73 @@
   background-color: color($colors, light);
 }
 
-
-.scroll-content::-webkit-scrollbar {
-    width: .5em;
+ion-col {
+  .col {
+    padding: 0px !important;
+    margin: 0px !important;
+  }
 }
+
+ion-grid {
+  padding: 0px !important;
+}
+
+.main-grid {
+  margin-bottom: 50px !important;
+}
+
+.card-md {
+  padding: 0px !important;
+}
+
+hr {
+  margin: 3px !important;
+}
+
+ion-card-content {
+  padding: 0px !important;
+}
+
+.card-content-md {
+  margin: 0px !important;
+}
+
 
 .toolbar-md {
   height: 56px !important;
 } 
 
-.scroll-content::-webkit-scrollbar {
-  width: 0px;  /* remove scrollbar space */
-  background: transparent;  /* optional: just make scrollbar invisible */
+
+@media (min-width: 768px) {
+  
+  .scroll-content::-webkit-scrollbar {
+    width: .5em;
+  }
+  
+  .scroll-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  }
+  
+  .scroll-content::-webkit-scrollbar-thumb {
+  background-color: color($colors, primary);
+  outline: 1px solid slategrey;
+  }
 }
+
+@media (max-width: 768px) {
+  .scroll-content::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
+}
+
+ion-menu {
+  .scroll-content::-webkit-scrollbar {
+    width: 0px !important;
+    background: transparent !important;
+  }
+}
+
 
 .top-temp {
   font-size: 170%;
@@ -39,7 +93,7 @@
 
 
 .orange {
-  color: color($colors, orange);
+  color: color($colors, orange) !important;
 }
 
 .green {
@@ -49,6 +103,7 @@
 .top-settings {
   font-size: 120%;
 }
+
 
 .nav-title {
   text-align: left;

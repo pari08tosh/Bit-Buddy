@@ -1,4 +1,4 @@
-<ion-split-pane when='lg'>
+<ion-split-pane when='md'>
   <ion-menu [content]="content" *ngIf="username">
     <ion-header>
       <ion-toolbar>
@@ -7,7 +7,7 @@
             <ion-avatar item-start>
               <img src="{{photoURL}}">
             </ion-avatar>
-            <h1>{{username}}</h1>
+            <h2 style="font-size: 120%">{{username}}</h2>
           </ion-item>
         </ion-title>
       </ion-toolbar>

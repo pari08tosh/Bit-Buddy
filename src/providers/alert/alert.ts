@@ -12,14 +12,14 @@ export class AlertProvider {
   ) {
   }
 
-alert(msg, duration) {
-  let toast = this.toastCtrl.create({
-    message: msg,
-    duration: duration,
-    position: 'bottom',
-    cssClass: 'toast-class',
-  });
-  toast.present();
-}
+  alert(msg, duration) {
+    let toast = this.toastCtrl.create({
+      message: msg,
+      duration: duration,
+      position: 'bottom',
+      cssClass: 'toast-class',
+    });
+    toast.present();
+  }
 
 }

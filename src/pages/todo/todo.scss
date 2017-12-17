@@ -1,5 +1,7 @@
 page-todo {
-
+  ion-card-content {
+    padding: 7px !important;
+  }
 }
 
 
@@ -15,7 +17,6 @@ page-todo {
 
 
 .todo-heading {
-  padding-top: 5px;
   color: color($colors, orange) !important;
   font-size: 110% !important;
 }

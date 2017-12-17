@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AlertProvider } from '../../providers/alert/alert';
-import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { TodoProvider } from '../../providers/todo/todo';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class EditTodoPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertProvider: AlertProvider,
-    public firebaseProvider: FirebaseProvider,
+    public todoProvider: TodoProvider,
   ) {
   }
 
@@ -32,7 +32,7 @@ export class EditTodoPage {
   }
 
   editTodo() {
-    this.firebaseProvider.editTodo(this.navParams.get('id'),{
+    this.todoProvider.editTodo(this.navParams.get('id'),{
       heading: this.heading,
       description: this.description,
       deadline: this.deadline.slice(0, -1),

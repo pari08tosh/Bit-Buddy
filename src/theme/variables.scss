@@ -16,7 +16,8 @@ $colors: (
   blue:     #2980b9,
   orange:   #d35400,
   red:      #c0392b,
-  green:    #16a085
+  green:    #16a085,
+  lightGreen: green,
 );
 // Overwriding statements
 
@@ -25,8 +26,9 @@ $text-color: color($colors, dark);
 $card-md-text-color: color($colors, dark);
 
 $toast-md-background: #f39c12;
-$toolbar-md-title-font-size: 2.5rem;
 $fab-md-background-color: #2ecc71;
+
+$card-md-thumbnail-size: 10px;
 
 $font-family-base: 'Ubuntu';
 $font-family-ios-base: 'Ubuntu';

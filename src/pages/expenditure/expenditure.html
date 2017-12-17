@@ -1,18 +1,68 @@
-<!--
-  Generated template for the ExpenditurePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar>
-    <ion-title>expenditure</ion-title>
+    <ion-title>Expenses</ion-title>
+
+    <ion-buttons end>
+      <button title="Debts & Credits" padding-right ion-button icon-only (click)="gotoDebts()" style="font-size: 120%">
+        <ion-icon padding-right name="swap"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content text-center>
+    <div style="margin-top: 20px" *ngIf="!waitingForData; else loading">
+      <h1 class="orange">Recent Transactions</h1>
+      <ion-grid class="main-grid" *ngIf="haveData; else noData">
+        <ion-row align-items-center>
+          <ion-col col-12 col-sm-6 *ngFor = "let expenditure of expenditureList" >
+            <ion-card class="todo-cards" (click)="editExpenditure(expenditure)">
+              <ion-item>
+                <ion-grid text-center>
+                  <ion-row>
+                    <ion-col col-6>
+                      <h2 class="expense-card-heading">{{expenditure.category}}</h2>
+                    </ion-col>
+                    <ion-col col-6>
+                      <h2 class="expense-card-heading1">&#x20b9; {{expenditure.amount}}</h2>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-item>
+              <ion-card-content style="position: relative; top: -10px;">
+                <p style="font-size: 110%; padding-bottom: 5px;">{{expenditure.description}}</p>
+                <hr>
+                <ion-row>
+                  <ion-col col-6>
+                    <p style="font-size: 120%;">{{expenditure.date | date}}</p>
+                  </ion-col>
+                  <ion-col col-6>
+                    <p style="font-size: 120%;">{{expenditure.modeOfPayment}}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
+    </div>
+    <ion-fab bottom right edge>
+      <button (click)="addExpenditure()" ion-fab><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+
+    <ng-template #noData>
+      <p>No Expenses This Month</p>
+    </ng-template>
+
+    <ng-template #loading>
+      <ion-spinner padding-top margin-top name="crescent"></ion-spinner>
+    </ng-template>
 </ion-content>
+
+<ion-footer text-center class="orange">
+  <h2>Total - &#x20b9; <span *ngIf="!waitingForData">{{totalExpenditure}}</span> </h2>
+</ion-footer>

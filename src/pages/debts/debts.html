@@ -1,0 +1,88 @@
+<!--
+  Generated template for the DebtsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Debts & Credits</ion-title>
+
+    <ion-buttons end>
+      <button padding-right ion-button icon-only (click)="addDebt()" style="font-size: 120%">
+        <ion-icon padding-right name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content (swipe)="swipe($event)">
+  <div *ngIf='waitingForData; else gotData' text-center>
+    <ion-spinner name="crescent" padding></ion-spinner>
+  </div>
+  <ng-template #gotData>
+    <div *ngIf = "haveData; else noDebts">
+      <h2 text-center *ngIf="debtView" class="orange">Debts</h2>
+      <h2 text-center *ngIf="!debtView" class="orange">Credits</h2> 
+      <ion-grid class="main-grid">
+        <ion-row align-items-center>
+          <ion-col col-12 col-sm-6 *ngFor = "let debt of viewList" >
+            <ion-card class="debt-card animated fadeIn">
+                <ion-card-content text-center style="padding-bottom: 0px;">
+                  <h2 *ngIf="debtView" style="font-size: 130%; padding: 5px;" class="debt-card-name">To - {{debt.name}}</h2>
+                  <h2 *ngIf="!debtView" style="font-size: 130%; padding: 5px;" class="debt-card-name">From - {{debt.name}}</h2>                    
+                  <p style="font-size: 110%; padding-bottom: 5px;">{{debt.description}}</p>
+                  <ion-row style="text-align: center;">
+                    <ion-col>
+                      <h2 style="position: relative; top: -5px; font-size: 130%;" class="debt-card-amount">&#x20b9; {{debt.amount}}</h2>
+                    </ion-col>
+                    <ion-col>
+                     <p style="position: relative; top: -5px;">{{debt.date | date}}</p>
+                    </ion-col>
+                  </ion-row>
+                  <hr>
+                </ion-card-content>
+                <ion-row style="text-align: center">
+                  <ion-col>
+                    <button (click)="editDebt(debt)" ion-button icon-left clear color="blue">
+                      <ion-icon name="create"></ion-icon>
+                      <div>Edit</div>
+                    </button>
+                  </ion-col>
+                  <ion-col>
+                    <button (click)="deleteDebt(debt)" ion-button icon-left clear color="secondary">
+                      <ion-icon name="checkmark"></ion-icon>
+                      <div>Paid</div>
+                    </button>
+                  </ion-col>
+                </ion-row>
+              </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <ng-template #noDebts>
+      <p *ngIf="debtView" text-center padding>
+        No Pending Debts
+      </p>
+      <p *ngIf="!debtView" text-center padding>
+        No Pending Credits
+      </p>
+    </ng-template>
+  </ng-template>
+</ion-content>
+
+<ion-footer class="news-footer">
+  <ion-segment [(ngModel)] = "segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="debt" color="red">
+      <h3 style="position: relative; top: -10px; color: #c0392b">Debt - &#x20b9; {{totalDebt}}</h3>
+    </ion-segment-button>
+    <ion-segment-button value="credit">
+      <h3 color="green" style="position: relative; top: -10px; color: green">Credit - &#x20b9; {{totalCredit}}</h3>
+    </ion-segment-button>
+  </ion-segment>
+</ion-footer>

@@ -3,33 +3,47 @@
 
   <ion-navbar>
     <ion-title>News</ion-title>
-  </ion-navbar>
 
+    <ion-buttons end>
+      <button title="News Sources" padding-right ion-button icon-only (click)="newsSources()" style="font-size: 120%">
+        <ion-icon padding-right name="albums"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
 
-<ion-content padding (swipe)="swipe($event)">
-  <div *ngIf='haveData; else loading'>
-    <div *ngIf='!error; else errorTemplate'>
-      <ion-grid>
-        <ion-row align-items-center>
-          <ion-col col-12 col-sm-6 *ngFor = 'let news of newsArray'>
-              <div>
-                  <ion-card class="news-card" (click)="newsClick(news.url)">
-                    <img src="{{news.urlToImage}}"/>
-                    <ion-card-content>
-                      <ion-card-title class="orange">
-                        {{news.title}}
-                      </ion-card-title>
-                      <p>
-                        {{news.description}}
-                      </p>
-                    </ion-card-content>
-                  </ion-card>
-                </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+<ion-content padding-top>
+  <div (swipe)="swipe($event)" *ngIf='haveData; else loading'>
+    <div *ngIf='sourcesArray.length !== 0; else noData'>
+      <div *ngIf='!error; else errorTemplate'>
+        <ion-item no-lines text-center class="news-heading">
+          <ion-thumbnail item-start>
+            <img src="{{sourcesArray[currentIndex].icon}}">
+          </ion-thumbnail>
+          <h2 class="orange" text-center style="font-size: 120">{{sourcesArray[currentIndex].name}}</h2>
+        </ion-item>
+        <hr>
+        <ion-grid padding-top>
+          <ion-row align-items-center>
+            <ion-col col-12 col-sm-6 *ngFor = 'let news of newsArray'>
+                <div>
+                    <ion-card class="news-card" (click)="newsClick(news.url)">
+                      <img src="{{news.urlToImage}}"/>
+                      <ion-card-content >
+                        <ion-card-title style="font-size: 130%; margin: 10px;" class="orange">
+                          {{news.title}}
+                        </ion-card-title>
+                        <p style="margin:10px;">
+                          {{news.description}}
+                        </p>
+                      </ion-card-content>
+                    </ion-card>
+                  </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
     </div>
   </div>
   <ng-template #loading>
@@ -40,18 +54,26 @@
   <ng-template #errorTemplate text-center>
       <p text-center>There was an error. Please try again later</p>
   </ng-template>
+  <ng-template #noData text-center>
+      <p text-center>
+        You haven't subscribed to any sources. Click the sources button at the top right
+        corner to choose the desired channels.
+      </p>
+  </ng-template>
+  <ion-fab middle left class="prevBtn" *ngIf="haveData && currentIndex > 0">
+    <button ion-fab mini (click)="swipe({direction: 4})"><ion-icon name="arrow-round-back"></ion-icon></button>
+  </ion-fab>
+  <ion-fab middle right class="nextBtn" *ngIf="haveData && currentIndex < sourcesArray.length - 1">
+    <button ion-fab mini (click)="swipe({direction: 2})"><ion-icon name="arrow-round-forward"></ion-icon></button>
+  </ion-fab>
 </ion-content>
 
 <ion-footer class="news-footer">
-  <ion-segment [ngModel] = "segment" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="hindu">
-      The Hindu
-    </ion-segment-button>
-    <ion-segment-button value="toi">
-      TOI
-    </ion-segment-button>
-    <ion-segment-button value="hacker">
-      Hacker News
+  <ion-scroll scrollX="true" style="height: 45px">
+  <ion-segment *ngIf="haveSources" [(ngModel)] = "segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button *ngFor="let source of sourcesArray, let i = index" value="{{i}}">
+      {{source.name}}
     </ion-segment-button>
   </ion-segment>
+</ion-scroll>
 </ion-footer>

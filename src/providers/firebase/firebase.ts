@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import * as firebase from 'firebase/app';
-import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
-import { Observable } from 'rxjs/Observable';
-import { Todo } from '../../models/models';
 import { Platform, AlertController } from 'ionic-angular';
 import { Facebook } from '@ionic-native/facebook';
 import { GooglePlus } from '@ionic-native/google-plus';
@@ -15,26 +11,18 @@ import 'rxjs/add/operator/map';
 export class FirebaseProvider {
 
   user: any;
-  todoList: Observable<Todo[]>;
-  todoCollection: AngularFirestoreCollection<Todo>;
 
   constructor(
-    public http: Http,
-    public db: AngularFirestore,
     public platform: Platform,
     public facebook: Facebook,
     private googlePlus: GooglePlus,
     private alertCtrl: AlertController,
     public afAuth: AngularFireAuth
   ) {
-    afAuth.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.todoCollection = this.db.collection<Todo>(`todos/${ this.user.uid }/user-todos`);
-      }
-    });
-
-  }
+      afAuth.authState.subscribe(user => {
+        this.user = user;
+      });
+    }
 
   // Auth methods
 
@@ -60,7 +48,6 @@ export class FirebaseProvider {
       .then( response => {
         const facebookCredential = firebase.auth.FacebookAuthProvider
           .credential(response.authResponse.accessToken);
-
           this.afAuth.auth.signInWithCredential(facebookCredential)
           .then( success => {
             callback(null);
@@ -112,32 +99,10 @@ export class FirebaseProvider {
 
   // Todo Methods
 
-  getTodos() {
-    return this.db.collection<Todo>(`todos/${ this.user.uid }/user-todos`, ref => ref.orderBy("deadline")).snapshotChanges().map(actions => {
-      return actions.map(a => {
-        const data = a.payload.doc.data() as Todo;
-        const id = a.payload.doc.id;
-        return { id, ...data };
-      });
-    });
-  }
-
   logout(callback) {
     this.afAuth.auth.signOut().then(() => {
       callback();
     });
-  }
-
-  addTodo(data) {
-    this.todoCollection.add(data);
-  }
-
-  deleteTodo(todo) {
-    this.todoCollection.doc(todo.id).delete();
-  }
-
-  editTodo(id, data) {
-    this.todoCollection.doc(id).update(data);
   }
 
   handleError(error) {

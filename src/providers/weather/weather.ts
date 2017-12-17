@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -239,7 +239,9 @@ export class WeatherProvider {
   }
 
   getQuote() {
-    return this.http.get(`http://quotes.stormconsultancy.co.uk/random.json`)
-    .map(res => res.json());
+    let headers = new Headers({ 'Accept': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http.get(`https://quotes.rest/qod`, options)
+      .map(res => res.json());
   }
 }

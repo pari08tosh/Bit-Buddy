@@ -4,13 +4,13 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <div *ngIf='!gotData;else haveData' class='todo-loading-div'>
-    <h2>Loading</h2>
+    <ion-spinner name="crescent"></ion-spinner>
   </div>
   <ng-template #haveData>
     <div *ngIf = 'todoList.length > 0; else noTodos'>
-      <ion-grid>
+      <ion-grid class="main-grid">
         <ion-row align-items-center>
           <ion-col col-12 col-sm-6 *ngFor = "let todo of todoList" >
               <ion-card class="todo-cards animated fadeIn">
@@ -22,15 +22,15 @@
                     <hr>
                     <p><i>Deadline:- {{todo.deadline | date:"dd MMM, hh:mm a"}}</i></p>
                   </ion-card-content>
-                  <ion-row style="text-align: center">
+                  <ion-row style="text-align: center;">
                     <ion-col>
-                      <button (click)="editTodo(todo)" ion-button icon-left clear small color="blue">
+                      <button (click)="editTodo(todo)" ion-button icon-left clear color="blue">
                         <ion-icon name="create"></ion-icon>
                         <div>Edit</div>
                       </button>
                     </ion-col>
                     <ion-col>
-                      <button (click)="deleteTodo(todo)" ion-button icon-left clear small color="secondary">
+                      <button (click)="deleteTodo(todo)" ion-button icon-left clear color="secondary">
                         <ion-icon name="checkmark-circle-outline"></ion-icon>
                         <div>Done</div>
                       </button>

@@ -1,0 +1,299 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>News Sources</ion-title>
+
+    <ion-buttons end>
+      <button title="News Sources" padding-right ion-button (click)="addSources()" style="font-size: 120%">
+        SAVE
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <p text-center>Choose from over 20 sources from various categories to stay updated with the worldly happenings. Hit save after checking the desired sources.</p>
+  <h3 padding-top margin-top class="orange">International</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.bbcNews.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.bbcNews.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.bbcNews.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.cnn.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.cnn.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.cnn.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.alJazeera.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.alJazeera.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.alJazeera.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.google.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.google.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.google.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">National</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.toi.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.toi.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.toi.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.hindu.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.hindu.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.hindu.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Sports</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.bbcSport.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.bbcSport.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.bbcSport.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.espn.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.espn.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.espn.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Business</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.cnbc.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.cnbc.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.cnbc.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.theEconomist.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.theEconomist.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.theEconomist.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Science</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.nationalGeographic.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.nationalGeographic.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.nationalGeographic.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.newScientist.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.newScientist.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.newScientist.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Technology</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.techRadar.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.techRadar.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.techRadar.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.theVerge.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.theVerge.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.theVerge.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.hackerNews.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.hackerNews.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.hackerNews.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.wired.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.wired.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.wired.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Gaming</h3>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.ign.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.ign.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.ign.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.polygon.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.polygon.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.polygon.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h3 padding-top margin-top class="orange">Entertainment</h3>
+  <ion-grid margin-bottom>
+    <ion-row>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.mtv.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.mtv.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.mtv.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.entertainmentWeekly.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.entertainmentWeekly.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.entertainmentWeekly.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+      <ion-col col-12 col-sm-6>
+        <ion-item>
+          <ion-checkbox [(ngModel)]="newsSources.buzzfeed.subscribe"></ion-checkbox>
+          <ion-label>
+             {{newsSources.buzzfeed.name}}
+          </ion-label>
+          <ion-thumbnail item-end>
+            <img src="{{newsSources.buzzfeed.icon}}">
+          </ion-thumbnail>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+  <button ion-button (click) = "addSources()">Save</button>
+</ion-content>

@@ -1,10 +1,12 @@
 import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, IonicApp, App, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { TodoPage } from '../pages/todo/todo';
 import { NewsPage } from '../pages/news/news';
+import { ExpenditurePage } from '../pages/expenditure/expenditure';
+
 
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
@@ -39,7 +41,10 @@ export class MyApp {
     public ref: ChangeDetectorRef,
     private localNotifications: LocalNotifications,
     public notificationProvider: NotificationProvider,
-    public afAuth: AngularFireAuth   
+    public afAuth: AngularFireAuth,
+    private _app: App,
+    private _ionicApp: IonicApp,
+    private _menu: MenuController  
   ) {
     this.initializeApp();
     this.afAuth.authState.subscribe(user =>{
@@ -56,6 +61,7 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage, icon: 'home', class: 'green' },
       { title: 'Todos', component: TodoPage, icon: 'list', class: '' },
+      { title: 'Expenses', component: ExpenditurePage, icon: 'card', class: '' },      
       { title: 'Weather', component: WeatherPage, icon: 'partly-sunny', class: '' },
       { title: 'News', component: NewsPage, icon: 'paper', class: '' },
       { title: 'Settings', component: SettingsPage, icon: 'settings', class: '' }
@@ -85,6 +91,8 @@ export class MyApp {
         }
       });
 
+      this.setupBackButtonBehavior ();
+
       this.localNotifications.on('click' , notification => {
         this.localNotifications.clearAll();
         if (notification.id === 1 || notification.id === 10) {
@@ -108,5 +116,42 @@ export class MyApp {
     }
     this.nav.setRoot(page.component);
     this.ref.detectChanges();
+  }
+
+
+  private setupBackButtonBehavior () {
+    
+    if (window.location.protocol !== "file:") {
+
+      // Register browser back button action(s)
+      window.onpopstate = (evt) => {
+
+        // Close menu if open
+        if (this._menu.isOpen()) {
+          this._menu.close ();
+          return;
+        }
+
+        // Close any active modals or overlays
+        let activePortal = this._ionicApp._loadingPortal.getActive() ||
+          this._ionicApp._modalPortal.getActive() ||
+          this._ionicApp._toastPortal.getActive() ||
+          this._ionicApp._overlayPortal.getActive();
+
+        if (activePortal) {
+          activePortal.dismiss();
+          return;
+        }
+
+        // Navigate back
+        if (this._app.getRootNav().canGoBack()) this._app.getRootNav().pop();
+
+      };
+
+      // Fake browser history on each view enter
+      this._app.viewDidEnter.subscribe((app) => {
+        history.pushState (null, null, "");
+      });
+    }
   }
 }

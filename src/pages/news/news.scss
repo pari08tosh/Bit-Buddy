@@ -1,3 +1,58 @@
+page-news {
+  ion-segment {
+    display: block;
+    white-space: nowrap;
+    overflow-x: scroll;
+
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        display: none;
+    }
+
+    ion-scroll {
+      width: 100vw;
+    }
+
+    ion-segment-button.segment-button {
+        display: inline-block;
+        min-width: 33vw;
+        min-height: 40px;
+        width: auto;
+    }
+  }
+
+  ion-fab {
+    display: none;
+  }
+
+  .news-heading {
+    max-width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    h2 {
+      font-size: 130%;
+    }
+  }
+}
+
+
+@media (min-width: 768px) {
+  ion-segment-button.segment-button {
+    display: inline-block !important;
+    min-width: 20vw !important;
+    min-height: 40px !important;
+    width: auto !important;
+  }
+
+  ion-scroll {
+    width: 70vw !important;
+  }
+
+  ion-fab {
+    display: block !important;
+  }
+}
 
 .news-footer {
   ion-segment-button {

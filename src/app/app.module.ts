@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule, Platform } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
@@ -7,8 +8,6 @@ import { BackgroundMode } from '@ionic-native/background-mode';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 import { Geolocation } from '@ionic-native/geolocation';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-
-
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { TodoPage } from '../pages/todo/todo';
@@ -16,8 +15,16 @@ import { WriteTodoPage } from '../pages/write-todo/write-todo';
 import { LoginPage } from '../pages/login/login';
 import { EditTodoPage } from '../pages/edit-todo/edit-todo';
 import { SettingsPage } from '../pages/settings/settings';
+import { AddExpenditurePage } from '../pages/add-expenditure/add-expenditure';
+import { EditExpenditurePage } from '../pages/edit-expenditure/edit-expenditure';
 import { WeatherPage } from '../pages/weather/weather';
 import { NewsPage } from '../pages/news/news';
+import { ExpenditurePage } from '../pages/expenditure/expenditure';
+import { DebtsPage } from '../pages/debts/debts';
+import { AddDebtPage } from '../pages/add-debt/add-debt';
+import { EditDebtPage } from '../pages/edit-debt/edit-debt';
+import { NewsSourcesPage } from '../pages/news-sources/news-sources';
+
 
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -35,6 +42,9 @@ import { NotificationProvider } from '../providers/notification/notification';
 import { WeatherProvider } from '../providers/weather/weather';
 import { FirebaseProvider } from '../providers/firebase/firebase';
 import { NewsProvider } from '../providers/news/news';
+import * as Chart from 'chart.js'
+import { TodoProvider } from '../providers/todo/todo';
+import { ExpenditureProvider } from '../providers/expenditure/expenditure';
 
 firebase.initializeApp(firebaseConfig);
 
@@ -48,7 +58,14 @@ firebase.initializeApp(firebaseConfig);
     EditTodoPage,
     SettingsPage,
     WeatherPage,
-    NewsPage
+    NewsPage,
+    ExpenditurePage,
+    AddExpenditurePage,
+    EditExpenditurePage,
+    DebtsPage,
+    AddDebtPage,
+    EditDebtPage,
+    NewsSourcesPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +74,8 @@ firebase.initializeApp(firebaseConfig);
     AngularFirestoreModule,
     HttpModule,
     IonicStorageModule.forRoot(),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,7 +87,14 @@ firebase.initializeApp(firebaseConfig);
     EditTodoPage,
     SettingsPage,
     WeatherPage,
-    NewsPage
+    NewsPage,
+    ExpenditurePage,
+    AddExpenditurePage,
+    EditExpenditurePage,
+    DebtsPage,
+    AddDebtPage,
+    EditDebtPage,
+    NewsSourcesPage
   ],
   providers: [
     StatusBar,
@@ -85,7 +110,9 @@ firebase.initializeApp(firebaseConfig);
     Geolocation,
     FirebaseProvider,
     NewsProvider,
-    InAppBrowser
+    InAppBrowser,
+    TodoProvider,
+    ExpenditureProvider
   ]
 })
 export class AppModule {}

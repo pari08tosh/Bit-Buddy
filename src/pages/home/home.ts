@@ -5,10 +5,14 @@ import { TodoPage } from '../todo/todo';
 import { SettingsPage } from '../settings/settings';
 import { NewsPage } from '../news/news';
 import { WeatherPage } from '../weather/weather';
+import { DebtsPage } from '../debts/debts';
 import { WeatherProvider } from '../../providers/weather/weather';
 import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { TodoProvider } from '../../providers/todo/todo';
 import { AngularFireAuth } from 'angularfire2/auth';
-
+import { ExpenditurePage } from '../expenditure/expenditure';
+import { ExpenditureProvider } from '../../providers/expenditure/expenditure';
+import * as Chart from 'chart.js';
 
 
 @Component({
@@ -31,6 +35,18 @@ export class HomePage {
   gotTodoData: Boolean;
   firstTodo: String;
   todoObservable: any;
+  haveExpenditures: Boolean = false;
+  expenditureObservable: any;
+  pieChart: any;
+  totalExpenditure: number = 0;
+  pieData: Number[] = [];
+  pielables: String[] = [];
+  canvas: any;
+  ctx: any;
+  totalDebt: number = 0;
+  totalCredit: number = 0;
+  haveDebts: Boolean = false;
+  debtObservable: any;
 
   constructor(
     public navCtrl: NavController,
@@ -38,7 +54,9 @@ export class HomePage {
     public weatherProvider: WeatherProvider,
     public loadingCtrl: LoadingController,
     public firebaseProvider: FirebaseProvider,
-    public afAuth: AngularFireAuth    
+    public todoProvider: TodoProvider,
+    public afAuth: AngularFireAuth,
+    public expenditureProvider: ExpenditureProvider    
   ) {
     this.user = null;
   }
@@ -47,6 +65,7 @@ export class HomePage {
     this.afAuth.authState.subscribe(user => {
       if (user) {
         this.user = user;
+        console.log('xyz');
         return true;
       } else {
         this.navCtrl.setRoot(LoginPage);
@@ -55,12 +74,7 @@ export class HomePage {
     });
   }
 
-  ngOnDestroy() {
-    this.ref.detach();
-  }
-
   ionViewDidLoad() {
-
     this.showContent = false;
     let date = new Date;
     let hour = date.getHours();
@@ -74,10 +88,17 @@ export class HomePage {
       }
     }
     this.afAuth.authState.subscribe(user => {
+      console.log('found user');
       if (user) {
         this.userName = user.displayName.split(' ')[0];
         this.photoURL = user.photoURL;
-        this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
+        if (!this.ref['destroyed']) {
+          this.ref.detectChanges();
+        }
+
+        // get todos
+        this.todoObservable = this.todoProvider.getTodos().subscribe(data => {
+          console.log(data);
           this.todoCount = data.length;
           if (data.length !== 0) {
             this.firstTodo = data[0].heading;
@@ -89,14 +110,76 @@ export class HomePage {
             this.ref.detectChanges();
           }
         });
-      }
-    });
 
+        //get expenditures
+        this.expenditureObservable = this.expenditureProvider.getExpenditures().subscribe(data => {
+          this.totalExpenditure = 0;
+          this.pielables = [];
+          this.pieData = [];
+          
+          if (data.length === 0) {
+            this.haveExpenditures = false;
+          } else {
+            this.haveExpenditures = true;
+          }
+    
+          if (this.haveExpenditures) {
+            let pieObject: Object = {};
+
+    
+            for (let ii = 0; ii < data.length; ii++) {
+              if (!pieObject[`${data[ii].category}`]) {
+                pieObject[`${data[ii].category}`] = 0;
+              }
+    
+              pieObject[`${data[ii].category}`] += Number(data[ii].amount); 
+              this.totalExpenditure += Number(data[ii].amount);
+            }
+
+            if (!this.ref['destroyed']) {
+              this.ref.detectChanges();
+            }
+            
+            for (let category in pieObject) {
+              if (pieObject.hasOwnProperty(category)) {
+                this.pielables.push(`${ category } - \u20B9 ${ pieObject[category] }`);
+                this.pieData.push(pieObject[category]);
+              }
+            }
+            this.drawChart();
+          }
+        });
+
+        //get Debts
+        this.debtObservable = this.expenditureProvider.getDebts().subscribe(data => {
+          this.totalDebt = 0;
+          this.totalCredit = 0;
+
+          for(let ii = 0; ii < data.length ; ii++) {
+            if (data[ii].type === 'Debt') {
+              this.totalDebt += Number(data[ii].amount);
+            } else {
+              this.totalCredit += Number(data[ii].amount);
+            }
+          }
+
+          this.haveDebts = true;
+
+          if (!this.ref['destroyed']) {
+            this.ref.detectChanges();
+          }
+        }); 
+
+      }
+    })
+
+
+    //get quote
     this.weatherProvider.getQuote().subscribe(
       data => {
         this.showContent = true;
-        this.quote = data.quote;
-        this.author = data.author;
+        this.quote = data.contents.quotes[0].quote;
+        this.author = data.contents.quotes[0].author;
         if (!this.ref['destroyed']) {
           this.ref.detectChanges();
         }
@@ -129,6 +212,52 @@ export class HomePage {
     });
   }
 
+  drawChart() {
+    if (this.pieChart) {
+      this.pieChart.destroy();
+    }
+    this.canvas = document.getElementById('myChart');
+    this.ctx = this.canvas.getContext('2d');
+    this.pieChart = new Chart(this.ctx, {
+      type: 'pie',
+      data: {
+          labels: this.pielables,
+          datasets: [{
+              label: '# of Votes',
+              data: this.pieData,
+              backgroundColor: [
+                '#3498db',
+                '#2ecc71',
+                '#e67e22',
+                '#1abc9c',
+                '#e74c3c',
+                '#34495e',
+                '#f1c40f',
+                '#7f8c8d',
+                '#c0392b',
+                '#16a085',
+                '#2c3e50',
+                '#8e44ad',
+                '#d35400',
+                '#333',
+                '#d35400',
+              ],
+              borderWidth: 1
+          }]
+      },
+      options: {
+        legend: {
+          position: 'bottom',
+          fullWidth: true,
+          labels: {
+            fontSize: 14,
+            padding: 15,
+          }
+        }
+      }
+    });
+  }
+
   settingsPage() {
     this.navCtrl.push(SettingsPage);
   }
@@ -138,7 +267,7 @@ export class HomePage {
   }
 
   expensesPage() {
-    this.navCtrl.push(TodoPage);
+    this.navCtrl.push(ExpenditurePage);
   }
 
   attendencePage() {
@@ -153,10 +282,21 @@ export class HomePage {
     this.navCtrl.push(WeatherPage);
   }
 
+  debtsPage() {
+    this.navCtrl.push(DebtsPage);
+  }
+
   ionViewWillUnload() {
     if (this.todoObservable) {
       this.todoObservable.unsubscribe();
     }
+    if (this.expenditureObservable) {
+      this.expenditureObservable.unsubscribe();
+    }
+  }
+
+  ngOnDestroy() {
+    this.ref.detach();
   }
 
 }

@@ -3,9 +3,8 @@ import { NavController } from 'ionic-angular';
 import { WriteTodoPage } from '../write-todo/write-todo';
 import { EditTodoPage } from '../edit-todo/edit-todo';
 import { AlertProvider } from '../../providers/alert/alert';
-import { FirebaseProvider } from '../../providers/firebase/firebase';
+import { TodoProvider } from '../../providers/todo/todo';
 import { Todo } from '../../models/models';
-import { Observable } from 'rxjs/Observable';
 
 
 
@@ -26,22 +25,19 @@ export class TodoPage {
     public navCtrl: NavController,
     public alertProvider: AlertProvider,
     public ref: ChangeDetectorRef,
-    public firebaseProvider: FirebaseProvider,
+    public todoProvider: TodoProvider,
   ) {
     this.gotData = false;
   }
 
   ionViewDidLoad() {
-    this.user = this.firebaseProvider.loggedIn();
-    if (this.user) {
-      this.todoObservable = this.firebaseProvider.getTodos().subscribe(data => {
-        this.todoList = data;
-        this.gotData = true;
-        if (!this.ref['destroyed']) {
-          this.ref.detectChanges();
-        }
-      });
-    }
+    this.todoObservable = this.todoProvider.getTodos().subscribe(data => {
+      this.todoList = data;
+      this.gotData = true;
+      if (!this.ref['destroyed']) {
+        this.ref.detectChanges();
+      }
+    });
   }
 
 
@@ -54,7 +50,7 @@ export class TodoPage {
   }
 
   deleteTodo(todo) {
-   this.firebaseProvider.deleteTodo(todo);
+   this.todoProvider.deleteTodo(todo);
    this.alertProvider.alert('Good Job!', 1500);
  }
 

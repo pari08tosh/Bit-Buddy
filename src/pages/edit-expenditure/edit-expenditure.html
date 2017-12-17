@@ -1,0 +1,55 @@
+<ion-header>
+  
+  <ion-navbar>
+    <ion-title>Edit Expenditure</ion-title>
+  </ion-navbar>
+  
+</ion-header>
+  
+  <ion-content padding>
+    <form #expenditureForm="ngForm" (submit)="editExpenditure()">
+      <ion-list>
+        <ion-item padding-bottom>
+          <ion-label floating>Amount</ion-label>
+          <ion-input required type="number" name="amount" [(ngModel)]="expenditure.amount"></ion-input>
+        </ion-item>
+        <ion-item padding-bottom>
+          <ion-label>Category</ion-label>
+          <ion-select name="category" [(ngModel)]="expenditure.category" interface="popover">
+            <ion-option value="Food">Food</ion-option>
+            <ion-option value="Travel">Travel</ion-option>
+            <ion-option value="Shopping">Shopping</ion-option>
+            <ion-option value="Stationary">Stationary</ion-option>
+            <ion-option value="Entertainment">Entertainment</ion-option>
+            <ion-option value="General">General</ion-option>
+            <ion-option value="Laundry">Laundry</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item padding-bottom>
+          <ion-label>Mode Of Payment</ion-label>
+          <ion-select name="modeOfPayment" [(ngModel)]="expenditure.modeOfPayment" interface="popover">
+            <ion-option value="Cash">Cash</ion-option>
+            <ion-option value="Card">Card</ion-option>
+            <ion-option value="E-Wallet">E-Wallet</ion-option>
+            <ion-option value="Other">Other</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Description (Optional)</ion-label>
+          <ion-textarea name="description" type="text" [(ngModel)]="expenditure.description"></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Date of Expenditure</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" min="2016" max="2030" name="date" [(ngModel)]="expenditure.date"></ion-datetime>
+        </ion-item>
+      </ion-list>
+      <button type="submit" margin-left [disabled]="expenditureForm.invalid" ion-button color="secondary">Save</button>
+    </form>
+
+    <ion-fab bottom right>
+      <button color="red" (click)="deleteExpenditure()" ion-fab><ion-icon name="trash"></ion-icon></button>
+    </ion-fab>
+  </ion-content>
+  
+  
+  

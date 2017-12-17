@@ -1,0 +1,40 @@
+<ion-header>
+    
+  <ion-navbar>
+     <ion-title>Edit Transaction</ion-title>
+  </ion-navbar>
+    
+</ion-header>
+    
+    
+<ion-content padding>
+  <form #debtForm="ngForm"  (submit)="editDebt()">
+    <ion-list>
+      <ion-item padding-bottom>
+        <ion-label floating>Amount</ion-label>
+        <ion-input required type="number" name="amount" [(ngModel)]="transaction.amount"></ion-input>
+      </ion-item>
+      <ion-item padding-bottom>
+        <ion-label floating>From/To</ion-label>
+        <ion-input required type="text" name="name" [(ngModel)]="transaction.name"></ion-input>
+      </ion-item>
+      <ion-item padding-bottom>
+        <ion-label>Type</ion-label>
+        <ion-select name="category" [(ngModel)]="transaction.type" interface="popover">
+          <ion-option value="Debt">Debt</ion-option>
+          <ion-option value="Credit">Credit</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Description (Optional)</ion-label>
+        <ion-textarea name="description" type="text" [(ngModel)]="transaction.description"></ion-textarea>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Transaction Date</ion-label>
+        <ion-datetime displayFormat="DD MMM YYYY" min="2016" max="2030" name="date" [(ngModel)]="transaction.date"></ion-datetime>
+      </ion-item>
+    </ion-list>
+    <button type="submit" margin-left [disabled]="debtForm.invalid" ion-button color="secondary">Save</button>
+  </form>
+</ion-content>
+    
