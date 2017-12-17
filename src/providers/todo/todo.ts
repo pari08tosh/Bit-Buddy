@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Todo } from '../../models/models';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseProvider } from '../firebase/firebase';
 import 'rxjs/add/operator/map';
 
 @Injectable()
@@ -14,12 +15,8 @@ export class TodoProvider {
     public db: AngularFirestore,
     public afAuth: AngularFireAuth    
   ) {
-    afAuth.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.todoCollection = this.db.collection<Todo>(`users/${ this.user.uid }/todos`);
-      }
-    });
+    this.user = FirebaseProvider.user;
+    this.todoCollection = this.db.collection<Todo>(`users/${ this.user.uid }/todos`);
   }
 
   getTodos() {

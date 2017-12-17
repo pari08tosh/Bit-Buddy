@@ -45,7 +45,7 @@ export class NewsSourcesPage {
       setTimeout(() => {
         loading.dismiss();
         this.navCtrl.pop();
-      }, 3000);
+      }, 2000);
     })
   }
 }

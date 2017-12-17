@@ -3,7 +3,9 @@ import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/fire
 import { Expenditure, Debt } from '../../models/models';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { DebtsPage } from '../../pages/debts/debts';
+import { FirebaseProvider } from '../firebase/firebase';
 import 'rxjs/add/operator/map';
+import { FirebaseAppProvider } from 'angularfire2';
 
 @Injectable()
 export class ExpenditureProvider {
@@ -17,13 +19,9 @@ export class ExpenditureProvider {
     public db: AngularFirestore,
     public afAuth: AngularFireAuth
   ) {
-    afAuth.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.expenditureCollection = this.db.collection<Expenditure>(`users/${ this.user.uid }/expenditures`);
-        this.debtCollection = this.db.collection<Debt>(`users/${ this.user.uid }/debts`) 
-      }
-    });
+    this.user = FirebaseProvider.user;
+    this.expenditureCollection = this.db.collection<Expenditure>(`users/${ this.user.uid }/expenditures`);
+    this.debtCollection = this.db.collection<Debt>(`users/${ this.user.uid }/debts`) 
   }
 
   getExpenditures() {

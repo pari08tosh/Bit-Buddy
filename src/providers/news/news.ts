@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { AngularFirestore,  AngularFirestoreCollection } from 'angularfire2/firestore';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseProvider } from '../firebase/firebase';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take'
 
@@ -127,12 +128,8 @@ export class NewsProvider {
     public db: AngularFirestore,
     public afAuth: AngularFireAuth
   ) {
-    afAuth.authState.subscribe(user => {
-      this.user = user;
-      if (user) {
-        this.newsCollection = this.db.collection<any>(`users/${ user.uid }/news`); 
-      }
-    });
+    this.user = FirebaseProvider.user;
+    this.newsCollection = this.db.collection<any>(`users/${ this.user.uid }/news`); 
   }
 
   getNews(code) {

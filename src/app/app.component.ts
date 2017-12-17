@@ -1,4 +1,4 @@
-import { Component, ViewChild, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Nav, Platform, IonicApp, App, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -6,28 +6,22 @@ import { HomePage } from '../pages/home/home';
 import { TodoPage } from '../pages/todo/todo';
 import { NewsPage } from '../pages/news/news';
 import { ExpenditurePage } from '../pages/expenditure/expenditure';
-
-
 import { SettingsPage } from '../pages/settings/settings';
 import { WeatherPage } from '../pages/weather/weather';
-import { BackgroundMode } from '@ionic-native/background-mode';
-import { LocalNotifications } from '@ionic-native/local-notifications';
-import { NotificationProvider } from '../providers/notification/notification';
+import { LoginPage } from '../pages/login/login';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { FirebaseProvider } from '../providers/firebase/firebase';
 
 
 
 
 @Component({
   templateUrl: 'app.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
-
-
+  rootPage: any;
   username: String = "";
   photoURL: String = "";
 
@@ -37,10 +31,7 @@ export class MyApp {
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
-    private backgroundMode: BackgroundMode,
     public ref: ChangeDetectorRef,
-    private localNotifications: LocalNotifications,
-    public notificationProvider: NotificationProvider,
     public afAuth: AngularFireAuth,
     private _app: App,
     private _ionicApp: IonicApp,
@@ -48,12 +39,14 @@ export class MyApp {
   ) {
     this.initializeApp();
     this.afAuth.authState.subscribe(user =>{
+      FirebaseProvider.user = user;
       if (user) {
-        this.notificationProvider.enableNotifications();
+        this.rootPage = HomePage;
         this.username = user.displayName;
         this.photoURL = user.photoURL;
       } else {
         this.username = "";
+        this.rootPage = LoginPage;
       }
       this.ref.detectChanges();
     });
@@ -68,37 +61,10 @@ export class MyApp {
     ];
   }
 
-
-
   initializeApp() {
     this.platform.ready().then(() => {
 
-      // Enable Background Mode on back button
-      this.platform.registerBackButtonAction(() => {
-        if (this.backgroundMode.isEnabled()) {
-          if (!this.nav.canGoBack()) {
-            this.backgroundMode.moveToBackground();
-          } else {
-            this.nav.pop();
-          }
-        }
-        else {
-          if (this.nav.canGoBack()) {
-            this.nav.pop();
-          } else {
-            this.platform.exitApp();
-          }
-        }
-      });
-
       this.setupBackButtonBehavior ();
-
-      this.localNotifications.on('click' , notification => {
-        this.localNotifications.clearAll();
-        if (notification.id === 1 || notification.id === 10) {
-          this.nav.setRoot(TodoPage);
-        }
-      });
 
       this.statusBar.styleDefault();
       this.statusBar.backgroundColorByHexString('#0f715e');
@@ -114,7 +80,7 @@ export class MyApp {
         this.pages[i].class = '';
       }
     }
-    this.nav.setRoot(page.component);
+    this.nav.setRoot(page.component, {}, { animate: true, direction: 'forward' });
     this.ref.detectChanges();
   }
 

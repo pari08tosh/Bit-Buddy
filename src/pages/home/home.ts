@@ -58,20 +58,7 @@ export class HomePage {
     public afAuth: AngularFireAuth,
     public expenditureProvider: ExpenditureProvider    
   ) {
-    this.user = null;
-  }
-
-  ionViewCanEnter() {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.user = user;
-        console.log('xyz');
-        return true;
-      } else {
-        this.navCtrl.setRoot(LoginPage);
-        return false;
-      }
-    });
+    this.user = FirebaseProvider.user;
   }
 
   ionViewDidLoad() {
@@ -87,91 +74,86 @@ export class HomePage {
         this.wish = `Good Evening`;
       }
     }
-    this.afAuth.authState.subscribe(user => {
-      console.log('found user');
-      if (user) {
-        this.userName = user.displayName.split(' ')[0];
-        this.photoURL = user.photoURL;
+
+    this.userName = this.user.displayName.split(' ')[0];
+    this.photoURL = this.user.photoURL;
+    if (!this.ref['destroyed']) {
+      this.ref.detectChanges();
+    }
+
+    // get todos
+    this.todoObservable = this.todoProvider.getTodos().subscribe(data => {
+      console.log(data);
+      this.todoCount = data.length;
+      if (data.length !== 0) {
+        this.firstTodo = data[0].heading;
+      } else {
+        this.firstTodo = '--';
+      }
+      this.gotTodoData = true;
+      if (!this.ref['destroyed']) {
+        this.ref.detectChanges();
+      }
+    });
+
+    //get expenditures
+    this.expenditureObservable = this.expenditureProvider.getExpenditures().subscribe(data => {
+      this.totalExpenditure = 0;
+      this.pielables = [];
+      this.pieData = [];
+      
+      if (data.length === 0) {
+        this.haveExpenditures = false;
+      } else {
+        this.haveExpenditures = true;
+      }
+
+      if (this.haveExpenditures) {
+        let pieObject: Object = {};
+
+    
+        for (let ii = 0; ii < data.length; ii++) {
+          if (!pieObject[`${data[ii].category}`]) {
+            pieObject[`${data[ii].category}`] = 0;
+          }
+    
+          pieObject[`${data[ii].category}`] += Number(data[ii].amount); 
+          this.totalExpenditure += Number(data[ii].amount);
+        }
+
         if (!this.ref['destroyed']) {
           this.ref.detectChanges();
         }
-
-        // get todos
-        this.todoObservable = this.todoProvider.getTodos().subscribe(data => {
-          console.log(data);
-          this.todoCount = data.length;
-          if (data.length !== 0) {
-            this.firstTodo = data[0].heading;
-          } else {
-            this.firstTodo = '--';
-          }
-          this.gotTodoData = true;
-          if (!this.ref['destroyed']) {
-            this.ref.detectChanges();
-          }
-        });
-
-        //get expenditures
-        this.expenditureObservable = this.expenditureProvider.getExpenditures().subscribe(data => {
-          this.totalExpenditure = 0;
-          this.pielables = [];
-          this.pieData = [];
-          
-          if (data.length === 0) {
-            this.haveExpenditures = false;
-          } else {
-            this.haveExpenditures = true;
-          }
-    
-          if (this.haveExpenditures) {
-            let pieObject: Object = {};
-
-    
-            for (let ii = 0; ii < data.length; ii++) {
-              if (!pieObject[`${data[ii].category}`]) {
-                pieObject[`${data[ii].category}`] = 0;
-              }
-    
-              pieObject[`${data[ii].category}`] += Number(data[ii].amount); 
-              this.totalExpenditure += Number(data[ii].amount);
-            }
-
-            if (!this.ref['destroyed']) {
-              this.ref.detectChanges();
-            }
             
-            for (let category in pieObject) {
-              if (pieObject.hasOwnProperty(category)) {
-                this.pielables.push(`${ category } - \u20B9 ${ pieObject[category] }`);
-                this.pieData.push(pieObject[category]);
-              }
-            }
-            this.drawChart();
+        for (let category in pieObject) {
+          if (pieObject.hasOwnProperty(category)) {
+            this.pielables.push(`${ category } - \u20B9 ${ pieObject[category] }`);
+            this.pieData.push(pieObject[category]);
           }
-        });
-
-        //get Debts
-        this.debtObservable = this.expenditureProvider.getDebts().subscribe(data => {
-          this.totalDebt = 0;
-          this.totalCredit = 0;
-
-          for(let ii = 0; ii < data.length ; ii++) {
-            if (data[ii].type === 'Debt') {
-              this.totalDebt += Number(data[ii].amount);
-            } else {
-              this.totalCredit += Number(data[ii].amount);
-            }
-          }
-
-          this.haveDebts = true;
-
-          if (!this.ref['destroyed']) {
-            this.ref.detectChanges();
-          }
-        }); 
-
+        }
+        this.drawChart();
       }
-    })
+    });
+
+    //get Debts
+    this.debtObservable = this.expenditureProvider.getDebts().subscribe(data => {
+      this.totalDebt = 0;
+      this.totalCredit = 0;
+
+      for(let ii = 0; ii < data.length ; ii++) {
+        if (data[ii].type === 'Debt') {
+          this.totalDebt += Number(data[ii].amount);
+        } else {
+          this.totalCredit += Number(data[ii].amount);
+        }
+      }
+
+      this.haveDebts = true;
+      if (!this.ref['destroyed']) {
+        this.ref.detectChanges();
+      }
+    }); 
+
 
 
     //get quote

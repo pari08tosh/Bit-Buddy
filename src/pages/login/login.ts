@@ -44,7 +44,7 @@ export class LoginPage {
       if (error) {
         return
       } else {
-        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward'});
+        this.navCtrl.setRoot(HomePage, {}, { animate: true, direction: 'forward' });
       }
     })
   }

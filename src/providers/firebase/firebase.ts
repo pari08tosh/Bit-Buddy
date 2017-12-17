@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 
 export class FirebaseProvider {
 
-  user: any;
+  static user: any;
 
   constructor(
     public platform: Platform,
@@ -19,15 +19,12 @@ export class FirebaseProvider {
     private alertCtrl: AlertController,
     public afAuth: AngularFireAuth
   ) {
-      afAuth.authState.subscribe(user => {
-        this.user = user;
-      });
     }
 
   // Auth methods
 
   loggedIn() {
-    return this.user;
+    return FirebaseProvider.user;
   }
 
   loginByFacebook(callback) {
